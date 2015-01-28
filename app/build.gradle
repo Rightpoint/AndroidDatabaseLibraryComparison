@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'aar-link-sources'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.raizlabs.android.databasecomparison"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+
+}
+
+dependencies {
+    apt 'com.raizlabs.android:DBFlow-Compiler:1.2.0'
+    aarLinkSources 'com.raizlabs.android:DBFlow-Compiler:1.2.0:sources@jar'
+    compile 'com.raizlabs.android:DBFlow-Core:1.2.0'
+    aarLinkSources 'com.raizlabs.android:DBFlow-Core:1.2.0:sources@jar'
+    compile 'com.raizlabs.android:DBFlow:1.2.0'
+    aarLinkSources 'com.raizlabs.android:DBFlow:1.2.0:sources@jar'
+
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    compile 'se.emilsjolander:sprinkles:1.3.1'
+    compile 'com.github.satyan:sugar:1.3'
+
+}
