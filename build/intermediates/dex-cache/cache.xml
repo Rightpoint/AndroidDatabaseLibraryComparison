@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/andrewgrosner/Documents/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.1/support-v4-19.0.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="587da9a481ffd341d2fa091704489b89845ddacd">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/support-v4-19.0.1-eca55a4ee48dd01f3d6eebf5d516a0a1079af43b.jar" />
+    </item>
+    <item
+        jar="/Users/andrewgrosner/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-b4e39c4e331bb575e8f2e9d718b3e803c2de00b5.jar" />
+    </item>
+    <item
+        jar="/Users/andrewgrosner/.gradle/caches/modules-2/files-2.1/com.raizlabs.android/DBFlow-Core/1.2.0/c23ac89cc7ae9f5878793ca3a8e45abfc268032c/DBFlow-Core-1.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c23ac89cc7ae9f5878793ca3a8e45abfc268032c">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/DBFlow-Core-1.2.0-c650287462f9c4d8e91f1d3d6b14f59d9e530955.jar" />
+    </item>
+    <item
+        jar="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="07e07903922250dabf50c7d131d6fa069a050305">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/classes-abf227a6d4254b44d5adccd4a8c7464407c18287.jar" />
+    </item>
+    <item
+        jar="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/exploded-aar/com.raizlabs.android/DBFlow/1.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="75c22afaaf981c0c768fa433f444a83db4e41c54">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/classes-5a365cfa79d8e86a0987b9d820396972a390c0bb.jar" />
+    </item>
+    <item
+        jar="/Users/andrewgrosner/.gradle/caches/modules-2/files-2.1/com.michaelpardo/activeandroid/3.1.0-SNAPSHOT/4ab7b0182975bc57c49efc5e0b3baa4a10e4ec08/activeandroid-3.1.0-SNAPSHOT.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4ab7b0182975bc57c49efc5e0b3baa4a10e4ec08">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/activeandroid-3.1.0-SNAPSHOT-bdb8d452843b3c2cbf54fac1062d237f320a2ce1.jar" />
+    </item>
+    <item
+        jar="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/exploded-aar/se.emilsjolander/sprinkles/1.3.1/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b4a8880e81a27d1f7df02a20e5241cb00774a1ed">
+        <dex dex="/Users/andrewgrosner/Programming/android/DatabaseComparison/app/build/intermediates/pre-dexed/debug/classes-7de904cf1f8ce26e51e2b19821516ae5a0caabd4.jar" />
+    </item>
+
+</items>
