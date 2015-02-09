@@ -15,7 +15,7 @@ import se.emilsjolander.sprinkles.annotations.Table;
  * Description:
  */
 @Table("AddressBook")
-public class AddressBook extends Model implements IAddressBook<AddressItem, Contact>{
+public class AddressBook extends Model implements IAddressBook<SimpleAddressItem, Contact>{
 
     @Column("id")
     @AutoIncrement
@@ -28,7 +28,7 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     @Column("author")
     private String author;
 
-    List<AddressItem> addresses;
+    List<SimpleAddressItem> addresses;
 
     List<Contact> contacts;
 
@@ -43,14 +43,14 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     }
 
     @Override
-    public void setAddresses(List<AddressItem> addresses) {
+    public void setAddresses(List<SimpleAddressItem> addresses) {
         this.addresses = addresses;
     }
 
     @Override
-    public List<AddressItem> getAddresses() {
+    public List<SimpleAddressItem> getAddresses() {
         if (addresses == null) {
-            addresses = Query.many(AddressItem.class, "addressBook = ?",
+            addresses = Query.many(SimpleAddressItem.class, "addressBook = ?",
                     String.valueOf(id)).get().asList();
         }
         return addresses;
@@ -77,7 +77,7 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     @Override
     public void saveAll() {
         super.save();
-        for (AddressItem addressItem : addresses) {
+        for (SimpleAddressItem addressItem : addresses) {
             addressItem.saveAll();
         }
         for (Contact contact : contacts) {

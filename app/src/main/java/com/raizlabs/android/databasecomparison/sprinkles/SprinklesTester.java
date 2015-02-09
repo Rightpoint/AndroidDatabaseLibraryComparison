@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.Saver;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.structure.Model;
 
 import java.util.List;
 

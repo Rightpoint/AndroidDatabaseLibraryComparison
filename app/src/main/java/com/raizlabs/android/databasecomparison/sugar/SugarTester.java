@@ -1,7 +1,5 @@
 package com.raizlabs.android.databasecomparison.sugar;
 
-import com.orm.SugarApp;
-import com.orm.SugarConfig;
 import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.Loader;
 import com.raizlabs.android.databasecomparison.MainActivity;
@@ -44,17 +42,17 @@ public class SugarTester {
     }
 
     public static void testSugarAddressItems() {
-        AddressItem.deleteAll(AddressItem.class);
+        SimpleAddressItem.deleteAll(SimpleAddressItem.class);
 
-        List<AddressItem> sugarModelList = Generator.getAddresses(AddressItem.class, MainActivity.LOOP_COUNT);
+        List<SimpleAddressItem> sugarModelList = Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
         long startTime = System.currentTimeMillis();
-        AddressItem.saveInTx(sugarModelList);
+        SimpleAddressItem.saveInTx(sugarModelList);
         MainActivity.logTime(startTime, "Sugar");
 
         startTime = System.currentTimeMillis();
-        sugarModelList = AddressItem.listAll(AddressItem.class);
+        sugarModelList = SimpleAddressItem.listAll(SimpleAddressItem.class);
         MainActivity.logTime(startTime, "Sugar load");
 
-        AddressItem.deleteAll(AddressItem.class);
+        SimpleAddressItem.deleteAll(SimpleAddressItem.class);
     }
 }

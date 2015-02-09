@@ -42,11 +42,11 @@ public class DBFlowTester {
     }
 
     public static void testDBFlowAddressItems() {
-        com.raizlabs.android.dbflow.sql.language.Delete.table(AddressItem.class);
-        List<AddressItem> dbFlowModels =
-                Generator.getAddresses(AddressItem.class, MainActivity.LOOP_COUNT);
+        com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);
+        List<SimpleAddressItem> dbFlowModels =
+                Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<AddressItem> finalDbFlowModels = dbFlowModels;
+        final List<SimpleAddressItem> finalDbFlowModels = dbFlowModels;
         TransactionManager.transact(DBFlowDatabase.NAME, new Runnable() {
             @Override
             public void run() {
@@ -56,9 +56,9 @@ public class DBFlowTester {
         MainActivity.logTime(startTime, "DBFlow");
 
         startTime = System.currentTimeMillis();
-        dbFlowModels = com.raizlabs.android.dbflow.sql.language.Select.all(AddressItem.class);
+        dbFlowModels = com.raizlabs.android.dbflow.sql.language.Select.all(SimpleAddressItem.class);
         MainActivity.logTime(startTime, "DBFlow load");
 
-        com.raizlabs.android.dbflow.sql.language.Delete.table(AddressItem.class);
+        com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);
     }
 }

@@ -47,10 +47,10 @@ public class AATester {
     }
 
     public static void testAAAddressItems() {
-        new Delete().from(AddressItem.class).execute();
+        new Delete().from(SimpleAddressItem.class).execute();
 
-        final List<AddressItem> activeAndroidModels =
-                Generator.getAddresses(AddressItem.class, MainActivity.LOOP_COUNT);
+        final List<SimpleAddressItem> activeAndroidModels =
+                Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
 
         long startTime = System.currentTimeMillis();
         // Reuse method so we don't have to write
@@ -63,10 +63,10 @@ public class AATester {
         MainActivity.logTime(startTime, "Active android");
 
         startTime = System.currentTimeMillis();
-        List<AddressItem> activeAndroidModelLoad =
-                new Select().from(AddressItem.class).execute();
+        List<SimpleAddressItem> activeAndroidModelLoad =
+                new Select().from(SimpleAddressItem.class).execute();
         MainActivity.logTime(startTime, "AA load");
 
-        new Delete().from(AddressItem.class).execute();
+        new Delete().from(SimpleAddressItem.class).execute();
     }
 }
