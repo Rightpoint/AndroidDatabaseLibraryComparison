@@ -24,14 +24,10 @@ public class MainActivity extends Activity {
         findViewById(R.id.simple).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SugarTester.testSugarAddressItems();
-
-                AATester.testAAAddressItems();
-
-                SprinklesTester.testSprinklesAddressItems(MainActivity.this);
-
                 DBFlowTester.testDBFlowAddressItems();
-
+                SprinklesTester.testSprinklesAddressItems(MainActivity.this);
+                AATester.testAAAddressItems();
+                SugarTester.testSugarAddressItems();
             }
 
         });

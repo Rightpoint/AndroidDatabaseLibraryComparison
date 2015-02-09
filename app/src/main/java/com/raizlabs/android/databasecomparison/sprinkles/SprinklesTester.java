@@ -30,7 +30,14 @@ public class SprinklesTester {
 
             }
         };
-        createSprinklesTableFor(openHelper, com.raizlabs.android.databasecomparison.dbflow.AddressItem.class);
+        openHelper.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS AddressItem(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT, " +
+                "address TEXT, " +
+                "city TEXT, " +
+                "state TEXT, " +
+                "phone INTEGER, " +
+                "addressBook INTEGER)");
         deleteSprinklesTables(openHelper, "AddressItem");
 
         List<AddressItem> sprinkleModels =
@@ -54,13 +61,6 @@ public class SprinklesTester {
         deleteSprinklesTables(openHelper, "AddressItem");
     }
 
-    @SafeVarargs
-    private static final void createSprinklesTableFor(SQLiteOpenHelper openHelper, Class<? extends Model>... modelClasses) {
-        for (Class<? extends Model> modelClass : modelClasses) {
-            openHelper.getWritableDatabase().execSQL(FlowManager.getModelAdapter(modelClass)
-                    .getCreationQuery());
-        }
-    }
 
     private static void deleteSprinklesTables(SQLiteOpenHelper openHelper, String...tables) {
         for(String table: tables) {

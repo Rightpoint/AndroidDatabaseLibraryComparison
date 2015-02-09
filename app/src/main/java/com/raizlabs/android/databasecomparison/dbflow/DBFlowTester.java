@@ -29,7 +29,7 @@ public class DBFlowTester {
                 Saver.saveAll(finalAddressBooks);
             }
         });
-        MainActivity.logTime(startTime, "DBFlow addresses");
+        MainActivity.logTime(startTime, "DBFlow save addresses");
 
         startTime = System.currentTimeMillis();
         addressBooks = com.raizlabs.android.dbflow.sql.language.Select.all(AddressBook.class);

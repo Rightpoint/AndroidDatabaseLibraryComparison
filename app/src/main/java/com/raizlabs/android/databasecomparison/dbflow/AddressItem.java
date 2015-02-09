@@ -5,11 +5,15 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Description:
  */
-@Table
+@Table(databaseName = DBFlowDatabase.NAME)
 public class AddressItem extends BaseModel implements IAddressItem<AddressBook> {
 
     @Column(columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
@@ -31,8 +35,9 @@ public class AddressItem extends BaseModel implements IAddressItem<AddressBook> 
     long phone;
 
     @Column(name = "addressBook", columnType = Column.FOREIGN_KEY,
-    references = {@ForeignKeyReference(columnName = "addressBook", columnType = long.class, foreignColumnName = "id")})
-    AddressBook addressBook;
+    references = {@ForeignKeyReference(columnName = "addressBook", columnType = long.class, foreignColumnName = "id")},
+    saveForeignKeyModel = false)
+    ForeignKeyContainer<AddressBook> addressBook;
 
     @Override
     public void setName(String name) {
@@ -61,7 +66,10 @@ public class AddressItem extends BaseModel implements IAddressItem<AddressBook> 
 
     @Override
     public void setAddressBook(AddressBook addressBook) {
-        this.addressBook = addressBook;
+        this.addressBook = new ForeignKeyContainer<>(AddressBook.class);
+        Map<String, Object> keys = new LinkedHashMap<>();
+        keys.put(AddressBook$Table.ID, addressBook.id);
+        this.addressBook.setData(keys);
     }
 
     @Override

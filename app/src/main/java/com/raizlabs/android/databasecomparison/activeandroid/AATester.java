@@ -19,7 +19,7 @@ public class AATester {
     public static void testAAAddressBooks() {
         new Delete().from(AddressItem.class).execute();
         new Delete().from(Contact.class).execute();
-        new Delete().from(AddressBook.class);
+        new Delete().from(AddressBook.class).execute();
 
         List<AddressBook> addressBooks =
                 Generator.createAddressBooks(AddressBook.class,

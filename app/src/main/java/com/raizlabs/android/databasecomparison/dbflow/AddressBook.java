@@ -2,6 +2,7 @@ package com.raizlabs.android.databasecomparison.dbflow;
 
 import com.raizlabs.android.databasecomparison.IAddressBook;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ContainerAdapter;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -12,7 +13,8 @@ import java.util.List;
 /**
  * Description:
  */
-@Table("AddressBook")
+@Table(value = "AddressBook", databaseName = DBFlowDatabase.NAME)
+@ContainerAdapter
 public class AddressBook extends BaseModel implements IAddressBook<AddressItem, Contact> {
 
     @Column(name = "id", columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
