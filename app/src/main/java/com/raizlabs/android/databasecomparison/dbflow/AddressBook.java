@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Table(value = "AddressBook", databaseName = DBFlowDatabase.NAME)
 @ContainerAdapter
-public class AddressBook extends BaseModel implements IAddressBook<SimpleAddressItem, Contact> {
+public class AddressBook extends BaseModel implements IAddressBook<AddressItem, Contact> {
 
     @Column(name = "id", columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
     long id;
@@ -26,7 +26,7 @@ public class AddressBook extends BaseModel implements IAddressBook<SimpleAddress
     @Column(name = "author")
     String author;
 
-    List<SimpleAddressItem> addresses;
+    List<AddressItem> addresses;
 
     List<Contact> contacts;
 
@@ -38,13 +38,13 @@ public class AddressBook extends BaseModel implements IAddressBook<SimpleAddress
         this.author = author;
     }
 
-    public void setAddresses(List<SimpleAddressItem> addresses) {
+    public void setAddresses(List<AddressItem> addresses) {
         this.addresses = addresses;
     }
 
-    public List<SimpleAddressItem> getAddresses() {
+    public List<AddressItem> getAddresses() {
         if (addresses == null) {
-            addresses = Select.all(SimpleAddressItem.class, Condition.column(AddressItem$Table.ADDRESSBOOK_ADDRESSBOOK).is(id));
+            addresses = Select.all(AddressItem.class, Condition.column(AddressItem$Table.ADDRESSBOOK_ADDRESSBOOK).is(id));
         }
         return addresses;
     }
@@ -63,7 +63,7 @@ public class AddressBook extends BaseModel implements IAddressBook<SimpleAddress
     @Override
     public void saveAll() {
         super.insert(false);
-        for (SimpleAddressItem addressItem : addresses) {
+        for (AddressItem addressItem : addresses) {
             addressItem.saveAll();
         }
         for (Contact contact : contacts) {

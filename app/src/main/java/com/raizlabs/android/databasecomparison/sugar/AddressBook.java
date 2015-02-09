@@ -10,14 +10,14 @@ import java.util.List;
 /**
  * Description:
  */
-public class AddressBook extends SugarRecord<AddressBook> implements IAddressBook<SimpleAddressItem, Contact> {
+public class AddressBook extends SugarRecord<AddressBook> implements IAddressBook<AddressItem, Contact> {
 
     private String name;
 
     private String author;
 
     @Ignore
-    List<SimpleAddressItem> addresses;
+    List<AddressItem> addresses;
 
     @Ignore
     List<Contact> contacts;
@@ -33,14 +33,14 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
     }
 
     @Override
-    public void setAddresses(List<SimpleAddressItem> addresses) {
+    public void setAddresses(List<AddressItem> addresses) {
         this.addresses = addresses;
     }
 
     @Override
-    public List<SimpleAddressItem> getAddresses() {
+    public List<AddressItem> getAddresses() {
         if(addresses == null) {
-            addresses = SimpleAddressItem.find(SimpleAddressItem.class, StringUtil.toSQLName("addressBook") + "= ?",
+            addresses = AddressItem.find(AddressItem.class, StringUtil.toSQLName("addressBook") + "= ?",
                     String.valueOf(id));
         }
         return addresses;
@@ -63,7 +63,7 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
     @Override
     public void saveAll() {
         super.save();
-        for(SimpleAddressItem addressItem : addresses) {
+        for(AddressItem addressItem : addresses) {
             addressItem.saveAll();
         }
         for(Contact contact: contacts) {
