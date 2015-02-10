@@ -21,8 +21,8 @@ public class Generator {
 
         addressItem.addToOne(addressBook,  addressItem.getProperties().get(0));
         contactItem.addToOne(addressBook,  contactItem.getProperties().get(0));
-        addressBook.addToMany(addressItem, addressItem.getProperties().get(addressItem.getProperties().size()-1));
-        addressBook.addToMany(contactItem, contactItem.getProperties().get(contactItem.getProperties().size()-1));
+        addressBook.addToMany(addressItem, addressItem.getProperties().get(0));
+        addressBook.addToMany(contactItem, contactItem.getProperties().get(0));
 
         try {
             new DaoGenerator().generateAll(schema,

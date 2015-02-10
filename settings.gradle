@@ -1,1 +1,2 @@
 include ':app', ':greendaogenerator'
+include ':Libraries:DBFlow:library', ':Libraries:DBFlow:flowcore',':Libraries:DBFlow:compiler'
