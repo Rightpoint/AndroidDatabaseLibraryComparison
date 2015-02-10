@@ -4,12 +4,14 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://raw.github.com/xujiaao/mvn-repository/master/releases' }
+        maven { url "https://raw.github.com/Raizlabs/maven-releases/master/releases" }
+
 
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'com.github.xujiaao:aarLinkSources:1.0.0'
+        classpath 'com.raizlabs:Griddle:1.0.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
