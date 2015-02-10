@@ -16,7 +16,7 @@ public class Loader {
             addressBook.getAddresses();
             List<IContact> contacts = addressBook.getContacts();
             for(IContact contact: contacts) {
-                contact.getAddressBook();
+                contact.getAddressBookField();
             }
         }
     }

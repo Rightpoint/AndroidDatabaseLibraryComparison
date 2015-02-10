@@ -1,0 +1,9 @@
+apply plugin: 'java'
+apply plugin: 'com.raizlabs.griddle'
+apply plugin: 'application'
+
+mainClassName = "com.raizlabs.Generator"
+
+dependencies {
+    mod 'de.greenrobot:greendao-generator:1.3.1'
+}

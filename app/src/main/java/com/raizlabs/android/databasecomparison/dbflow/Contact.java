@@ -52,7 +52,7 @@ public class Contact extends BaseModel implements IContact<AddressBook> {
     }
 
     @Override
-    public AddressBook getAddressBook() {
+    public AddressBook getAddressBookField() {
         return addressBook.toModel();
     }
 

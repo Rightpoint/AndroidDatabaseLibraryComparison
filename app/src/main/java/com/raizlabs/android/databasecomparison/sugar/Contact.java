@@ -35,7 +35,7 @@ public class Contact extends SugarRecord<Contact> implements IContact<AddressBoo
     }
 
     @Override
-    public AddressBook getAddressBook() {
+    public AddressBook getAddressBookField() {
         return addressBook;
     }
 
