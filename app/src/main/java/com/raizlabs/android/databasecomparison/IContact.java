@@ -13,7 +13,7 @@ public interface IContact<AddressBook extends IAddressBook> extends ISaveable {
 
     public void setEmail(String email);
 
-    public AddressBook getAddressBook();
+    public AddressBook getAddressBookField();
 
     public void setAddressBook(AddressBook addressBook);
 }

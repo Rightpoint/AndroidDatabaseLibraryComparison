@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.raizlabs.android.databasecomparison.activeandroid.AATester;
 import com.raizlabs.android.databasecomparison.dbflow.DBFlowTester;
+import com.raizlabs.android.databasecomparison.greendao.GreenDaoTester;
 import com.raizlabs.android.databasecomparison.sprinkles.SprinklesTester;
 import com.raizlabs.android.databasecomparison.sugar.SugarTester;
 
@@ -24,6 +25,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.simple).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GreenDaoTester.testAddressItems(MainActivity.this);
                 DBFlowTester.testDBFlowAddressItems();
                 SprinklesTester.testSprinklesAddressItems(MainActivity.this);
                 AATester.testAAAddressItems();
@@ -35,9 +37,10 @@ public class MainActivity extends Activity {
         findViewById(R.id.complex).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GreenDaoTester.testAddressBooks(MainActivity.this);
+                DBFlowTester.testDBFlowAddressBooks();
                 SugarTester.testSugarAddressBooks();
                 AATester.testAAAddressBooks();
-                DBFlowTester.testDBFlowAddressBooks();
             }
         });
     }

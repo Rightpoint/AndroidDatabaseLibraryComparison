@@ -1,12 +1,16 @@
 package com.raizlabs.android.databasecomparison.dbflow;
 
 import com.raizlabs.android.databasecomparison.IAddressBook;
+import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ContainerAdapter;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.cache.BaseCacheableModel;
+import com.raizlabs.android.dbflow.structure.cache.ModelCache;
+import com.raizlabs.android.dbflow.structure.cache.SparseArrayBasedCache;
 
 import java.util.List;
 
@@ -15,7 +19,7 @@ import java.util.List;
  */
 @Table(value = "AddressBook", databaseName = DBFlowDatabase.NAME)
 @ContainerAdapter
-public class AddressBook extends BaseModel implements IAddressBook<AddressItem, Contact> {
+public class AddressBook extends BaseCacheableModel implements IAddressBook<AddressItem, Contact> {
 
     @Column(name = "id", columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
     long id;
@@ -70,4 +74,10 @@ public class AddressBook extends BaseModel implements IAddressBook<AddressItem, 
             contact.saveAll();
         }
     }
+
+    @Override
+    public int getCacheSize() {
+        return MainActivity.ADDRESS_BOOK_COUNT;
+    }
+
 }

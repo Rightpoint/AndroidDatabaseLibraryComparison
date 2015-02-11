@@ -41,7 +41,7 @@ public class Contact extends Model implements IContact<AddressBook> {
     }
 
     @Override
-    public AddressBook getAddressBook() {
+    public AddressBook getAddressBookField() {
         return addressBook;
     }
 
