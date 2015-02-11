@@ -83,6 +83,10 @@ public class AddressBook {
         return addressItemList;
     }
 
+    public void setAddressItemList(List<AddressItem> addressItemList) {
+        this.addressItemList = addressItemList;
+    }
+
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     public synchronized void resetAddressItemList() {
         addressItemList = null;
@@ -103,6 +107,10 @@ public class AddressBook {
             }
         }
         return contactList;
+    }
+
+    public void setContactList(List<Contact> contactList) {
+        this.contactList = contactList;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */

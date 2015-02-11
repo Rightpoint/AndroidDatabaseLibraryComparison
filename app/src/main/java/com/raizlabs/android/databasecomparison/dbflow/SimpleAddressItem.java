@@ -77,9 +77,4 @@ public class SimpleAddressItem extends BaseCacheableModel implements IAddressIte
     public int getCacheSize() {
         return MainActivity.LOOP_COUNT;
     }
-
-    @Override
-    protected ModelCache<? extends BaseCacheableModel, ?> getBackingCache() {
-        return new SparseArrayBasedCache<>();
-    }
 }

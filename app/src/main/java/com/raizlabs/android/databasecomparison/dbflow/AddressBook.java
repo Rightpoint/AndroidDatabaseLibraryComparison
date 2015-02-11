@@ -80,8 +80,4 @@ public class AddressBook extends BaseCacheableModel implements IAddressBook<Addr
         return MainActivity.ADDRESS_BOOK_COUNT;
     }
 
-    @Override
-    protected ModelCache<? extends BaseCacheableModel, ?> getBackingCache() {
-        return new SparseArrayBasedCache<>();
-    }
 }

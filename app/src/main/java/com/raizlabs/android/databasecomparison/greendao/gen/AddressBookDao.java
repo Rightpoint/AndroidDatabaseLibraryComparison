@@ -129,5 +129,5 @@ public class AddressBookDao extends AbstractDao<AddressBook, Long> {
     protected boolean isEntityUpdateable() {
         return true;
     }
-    
+
 }

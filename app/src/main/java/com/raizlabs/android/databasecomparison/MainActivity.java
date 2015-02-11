@@ -37,9 +37,10 @@ public class MainActivity extends Activity {
         findViewById(R.id.complex).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GreenDaoTester.testAddressBooks(MainActivity.this);
+                DBFlowTester.testDBFlowAddressBooks();
                 SugarTester.testSugarAddressBooks();
                 AATester.testAAAddressBooks();
-                DBFlowTester.testDBFlowAddressBooks();
             }
         });
     }
