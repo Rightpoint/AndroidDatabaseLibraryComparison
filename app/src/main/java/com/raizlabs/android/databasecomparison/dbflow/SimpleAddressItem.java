@@ -7,6 +7,8 @@ import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.cache.BaseCacheableModel;
+import com.raizlabs.android.dbflow.structure.cache.ModelCache;
+import com.raizlabs.android.dbflow.structure.cache.SparseArrayBasedCache;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
 import java.util.LinkedHashMap;
@@ -74,5 +76,10 @@ public class SimpleAddressItem extends BaseCacheableModel implements IAddressIte
     @Override
     public int getCacheSize() {
         return MainActivity.LOOP_COUNT;
+    }
+
+    @Override
+    protected ModelCache<? extends BaseCacheableModel, ?> getBackingCache() {
+        return new SparseArrayBasedCache<>();
     }
 }

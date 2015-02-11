@@ -27,9 +27,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 GreenDaoTester.testAddressItems(MainActivity.this);
                 DBFlowTester.testDBFlowAddressItems();
-                //SprinklesTester.testSprinklesAddressItems(MainActivity.this);
-                //AATester.testAAAddressItems();
-                //SugarTester.testSugarAddressItems();
+                SprinklesTester.testSprinklesAddressItems(MainActivity.this);
+                AATester.testAAAddressItems();
+                SugarTester.testSugarAddressItems();
             }
 
         });

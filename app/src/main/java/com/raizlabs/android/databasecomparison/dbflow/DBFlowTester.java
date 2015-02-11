@@ -33,6 +33,8 @@ public class DBFlowTester {
 
         startTime = System.currentTimeMillis();
         addressBooks = com.raizlabs.android.dbflow.sql.language.Select.all(AddressBook.class);
+        MainActivity.logTime(startTime, "DBFlow load only addresses");
+
         Loader.loadAllInnerData(addressBooks);
         MainActivity.logTime(startTime, "DBFlow load addresses");
 

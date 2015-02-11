@@ -62,6 +62,7 @@ public class Contact extends BaseModel implements IContact<AddressBook> {
         Map<String, Object> keys = new LinkedHashMap<>();
         keys.put(AddressBook$Table.ID, addressBook.id);
         this.addressBook.setData(keys);
+        this.addressBook.setModel(addressBook);
     }
 
     @Override
