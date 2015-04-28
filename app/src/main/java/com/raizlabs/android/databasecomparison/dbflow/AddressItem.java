@@ -65,7 +65,7 @@ public class AddressItem extends BaseModel implements IAddressItem<AddressBook> 
         super.insert(false);
     }
 
-    @Column(name = "addressBook", columnType = Column.FOREIGN_KEY,
+    @Column(columnType = Column.FOREIGN_KEY,
             references = {@ForeignKeyReference(columnName = "addressBook", columnType = long.class, foreignColumnName = "id")},
             saveForeignKeyModel = false)
     ForeignKeyContainer<AddressBook> addressBook;

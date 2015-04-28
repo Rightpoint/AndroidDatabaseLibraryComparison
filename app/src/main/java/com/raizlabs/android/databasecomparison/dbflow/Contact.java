@@ -25,7 +25,7 @@ public class Contact extends BaseModel implements IContact<AddressBook> {
     @Column(name = "email")
     String email;
 
-    @Column(name = "addressBook", columnType = Column.FOREIGN_KEY,
+    @Column(columnType = Column.FOREIGN_KEY,
             references = {@ForeignKeyReference(columnName = "addressBook",
                     foreignColumnName = "id", columnType = long.class)},
     saveForeignKeyModel = false)

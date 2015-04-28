@@ -1,5 +1,6 @@
 package com.raizlabs.android.databasecomparison.greendao.gen;
 
+import com.raizlabs.android.databasecomparison.IContact;
 import com.raizlabs.android.databasecomparison.greendao.gen.DaoSession;
 import de.greenrobot.dao.DaoException;
 
@@ -7,7 +8,7 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table CONTACT.
  */
-public class Contact {
+public class Contact implements IContact<AddressBook> {
 
     private Long id;
     private String name;
@@ -66,6 +67,11 @@ public class Contact {
         this.email = email;
     }
 
+    @Override
+    public AddressBook getAddressBookField() {
+        return addressBook;
+    }
+
     /** To-one relationship, resolved on first access. */
     public AddressBook getAddressBook() {
         Long __key = this.id;
@@ -115,4 +121,7 @@ public class Contact {
         myDao.refresh(this);
     }
 
+    @Override
+    public void saveAll() {
+    }
 }

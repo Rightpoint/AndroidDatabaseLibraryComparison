@@ -1,6 +1,8 @@
 package com.raizlabs.android.databasecomparison.greendao.gen;
 
 import java.util.List;
+
+import com.raizlabs.android.databasecomparison.IAddressBook;
 import com.raizlabs.android.databasecomparison.greendao.gen.DaoSession;
 import de.greenrobot.dao.DaoException;
 
@@ -8,7 +10,7 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table ADDRESS_BOOK.
  */
-public class AddressBook {
+public class AddressBook implements IAddressBook<AddressItem, Contact> {
 
     private Long id;
     private String name;
@@ -64,6 +66,26 @@ public class AddressBook {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    @Override
+    public void setAddresses(List<AddressItem> addresses) {
+        addressItemList = addresses;
+    }
+
+    @Override
+    public List<AddressItem> getAddresses() {
+        return addressItemList;
+    }
+
+    @Override
+    public List<Contact> getContacts() {
+        return contactList;
+    }
+
+    @Override
+    public void setContacts(List<Contact> contacts) {
+        contactList = contacts;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
@@ -142,4 +164,8 @@ public class AddressBook {
         myDao.refresh(this);
     }
 
+    @Override
+    public void saveAll() {
+
+    }
 }
