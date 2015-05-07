@@ -5,6 +5,7 @@ import com.raizlabs.android.databasecomparison.Loader;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.Saver;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class DBFlowTester {
         MainActivity.logTime(startTime, "DBFlow save addresses");
 
         startTime = System.currentTimeMillis();
-        addressBooks = com.raizlabs.android.dbflow.sql.language.Select.all(AddressBook.class);
+        addressBooks = new Select().from(AddressBook.class).queryList();
         Loader.loadAllInnerData(addressBooks);
         MainActivity.logTime(startTime, "DBFlow load addresses");
 
@@ -56,7 +57,7 @@ public class DBFlowTester {
         MainActivity.logTime(startTime, "DBFlow");
 
         startTime = System.currentTimeMillis();
-        dbFlowModels = com.raizlabs.android.dbflow.sql.language.Select.all(SimpleAddressItem.class);
+        dbFlowModels = new Select().from(SimpleAddressItem.class).queryList();
         MainActivity.logTime(startTime, "DBFlow load");
 
         com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);

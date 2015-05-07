@@ -3,25 +3,24 @@ package com.raizlabs.android.databasecomparison.dbflow;
 import com.raizlabs.android.databasecomparison.IAddressBook;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ContainerAdapter;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.cache.BaseCacheableModel;
-import com.raizlabs.android.dbflow.structure.cache.ModelCache;
-import com.raizlabs.android.dbflow.structure.cache.SparseArrayBasedCache;
 
 import java.util.List;
 
 /**
  * Description:
  */
-@Table(value = "AddressBook", databaseName = DBFlowDatabase.NAME)
-@ContainerAdapter
+@Table(tableName = "AddressBook", databaseName = DBFlowDatabase.NAME)
+@ModelContainer
 public class AddressBook extends BaseCacheableModel implements IAddressBook<AddressItem, Contact> {
 
-    @Column(name = "id", columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
+    @PrimaryKey(autoincrement = true)
+    @Column
     long id;
 
     @Column(name = "name")
@@ -48,14 +47,14 @@ public class AddressBook extends BaseCacheableModel implements IAddressBook<Addr
 
     public List<AddressItem> getAddresses() {
         if (addresses == null) {
-            addresses = Select.all(AddressItem.class, Condition.column(AddressItem$Table.ADDRESSBOOK_ADDRESSBOOK).is(id));
+            addresses = new Select().from(AddressItem.class).where(Condition.column(AddressItem$Table.ADDRESSBOOK_ADDRESSBOOK).is(id)).queryList();
         }
         return addresses;
     }
 
     public List<Contact> getContacts() {
         if (contacts == null) {
-            contacts = Select.all(Contact.class, Condition.column(Contact$Table.ADDRESSBOOK_ADDRESSBOOK).is(id));
+            contacts = new Select().from(Contact.class).where(Condition.column(Contact$Table.ADDRESSBOOK_ADDRESSBOOK).is(id)).queryList();
         }
         return contacts;
     }
@@ -66,7 +65,7 @@ public class AddressBook extends BaseCacheableModel implements IAddressBook<Addr
 
     @Override
     public void saveAll() {
-        super.insert(false);
+        super.insert();
         for (AddressItem addressItem : addresses) {
             addressItem.saveAll();
         }
