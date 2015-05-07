@@ -2,7 +2,9 @@ package com.raizlabs.android.databasecomparison.dbflow;
 
 import com.raizlabs.android.databasecomparison.IAddressItem;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
@@ -16,7 +18,8 @@ import java.util.Map;
 @Table(databaseName = DBFlowDatabase.NAME)
 public class AddressItem extends BaseModel implements IAddressItem<AddressBook> {
 
-    @Column(columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
+    @PrimaryKey(autoincrement = true)
+    @Column
     long id;
 
     @Column(name = "name")
@@ -62,12 +65,13 @@ public class AddressItem extends BaseModel implements IAddressItem<AddressBook> 
 
     @Override
     public void saveAll() {
-        super.insert(false);
+        super.insert();
     }
 
-    @Column(columnType = Column.FOREIGN_KEY,
+    @ForeignKey(
             references = {@ForeignKeyReference(columnName = "addressBook", columnType = long.class, foreignColumnName = "id")},
             saveForeignKeyModel = false)
+    @Column
     ForeignKeyContainer<AddressBook> addressBook;
 
 
