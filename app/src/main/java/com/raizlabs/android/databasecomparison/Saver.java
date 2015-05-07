@@ -1,13 +1,15 @@
 package com.raizlabs.android.databasecomparison;
 
-import java.util.List;
+import com.raizlabs.android.databasecomparison.interfaces.ISaveable;
+
+import java.util.Collection;
 
 /**
  * Description:
  */
 public class Saver {
 
-    public static void saveAll(List<? extends ISaveable> saveables) {
+    public static void saveAll(Collection<? extends ISaveable> saveables) {
         for(ISaveable saveable: saveables) {
             saveable.saveAll();
         }

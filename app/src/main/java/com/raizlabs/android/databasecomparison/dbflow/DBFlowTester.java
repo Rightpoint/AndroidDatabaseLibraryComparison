@@ -7,23 +7,23 @@ import com.raizlabs.android.databasecomparison.Saver;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
  */
 public class DBFlowTester {
 
-    public static void testDBFlowAddressBooks(MainActivity mainActivity) {
+    public static void testAddressBooks(MainActivity mainActivity) {
         com.raizlabs.android.dbflow.sql.language.Delete.tables(AddressItem.class,
                 Contact.class, AddressBook.class);
 
-        List<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
+        Collection<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
                 Contact.class, AddressItem.class,
                 MainActivity.ADDRESS_BOOK_COUNT);
 
         long startTime = System.currentTimeMillis();
-        final List<AddressBook> finalAddressBooks = addressBooks;
+        final Collection<AddressBook> finalAddressBooks = addressBooks;
         TransactionManager.transact(DBFlowDatabase.NAME, new Runnable() {
             @Override
             public void run() {
@@ -42,12 +42,12 @@ public class DBFlowTester {
                 Contact.class, AddressBook.class);
     }
 
-    public static void testDBFlowAddressItems(MainActivity mainActivity) {
+    public static void testAddressItems(MainActivity mainActivity) {
         com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);
-        List<SimpleAddressItem> dbFlowModels =
+        Collection<SimpleAddressItem> dbFlowModels =
                 Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<SimpleAddressItem> finalDbFlowModels = dbFlowModels;
+        final Collection<SimpleAddressItem> finalDbFlowModels = dbFlowModels;
         TransactionManager.transact(DBFlowDatabase.NAME, new Runnable() {
             @Override
             public void run() {

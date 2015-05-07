@@ -4,9 +4,9 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-import com.raizlabs.android.databasecomparison.IAddressBook;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
@@ -20,9 +20,9 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     @Column(name = "author")
     private String author;
 
-    List<AddressItem> addresses;
+    Collection<AddressItem> addresses;
 
-    List<Contact> contacts;
+    Collection<Contact> contacts;
 
     @Override
     public void setName(String name) {
@@ -35,12 +35,12 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     }
 
     @Override
-    public void setAddresses(List<AddressItem> addresses) {
+    public void setAddresses(Collection<AddressItem> addresses) {
         this.addresses = addresses;
     }
 
     @Override
-    public List<AddressItem> getAddresses() {
+    public Collection<AddressItem> getAddresses() {
         if (addresses == null) {
             addresses = new Select().from(AddressItem.class).where("addressBook = ?", getId()).execute();
         }
@@ -48,14 +48,14 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     }
 
     @Override
-    public List<Contact> getContacts() {
+    public Collection<Contact> getContacts() {
         if (contacts == null) {
             contacts = new Select().from(Contact.class).where("addressBook = ?", getId()).execute();
         }
         return contacts;
     }
 
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Collection<Contact> contacts) {
         this.contacts = contacts;
     }
 

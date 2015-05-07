@@ -11,6 +11,7 @@ import com.raizlabs.android.databasecomparison.greendao.gen.DaoSession;
 import com.raizlabs.android.databasecomparison.greendao.gen.SimpleAddressItem;
 import com.raizlabs.android.databasecomparison.greendao.gen.SimpleAddressItemDao;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public class GreenDaoTester {
         addressBooks = addressBookDao.loadAll();
         for (AddressBook addressBook : addressBooks) {
             addressBook.getAddressItemList();
-            List<Contact> contactList = addressBook.getContactList();
+            Collection<Contact> contactList = addressBook.getContactList();
             for(Contact contact: contactList) {
                 contact.getAddressBook();
             }

@@ -8,6 +8,7 @@ import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.Saver;
 
+import java.util.Collection;
 import java.util.List;
 
 import se.emilsjolander.sprinkles.Query;
@@ -17,7 +18,7 @@ import se.emilsjolander.sprinkles.Transaction;
  * Description:
  */
 public class SprinklesTester {
-    public static void testSprinklesAddressItems(MainActivity mainActivity) {
+    public static void testAddressItems(MainActivity mainActivity) {
         SQLiteOpenHelper openHelper = new SQLiteOpenHelper(mainActivity, "sprinkles.db", null, 2) {
             @Override
             public void onCreate(SQLiteDatabase db) {
@@ -38,7 +39,7 @@ public class SprinklesTester {
                 "addressBook INTEGER)");
         deleteSprinklesTables(openHelper, "AddressItem");
 
-        List<AddressItem> sprinkleModels =
+        Collection<AddressItem> sprinkleModels =
                 Generator.getAddresses(AddressItem.class, MainActivity.LOOP_COUNT);
 
         long startTime = System.currentTimeMillis();

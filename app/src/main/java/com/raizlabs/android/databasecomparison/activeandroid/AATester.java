@@ -9,25 +9,25 @@ import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.Saver;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
  */
 public class AATester {
 
-    public static void testAAAddressBooks(MainActivity mainActivity) {
+    public static void testAddressBooks(MainActivity mainActivity) {
         new Delete().from(AddressItem.class).execute();
         new Delete().from(Contact.class).execute();
         new Delete().from(AddressBook.class).execute();
 
-        List<AddressBook> addressBooks =
+        Collection<AddressBook> addressBooks =
                 Generator.createAddressBooks(AddressBook.class,
                         Contact.class,
                         AddressItem.class,
                         MainActivity.ADDRESS_BOOK_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<AddressBook> finalAddressBooks = addressBooks;
+        final Collection<AddressBook> finalAddressBooks = addressBooks;
         TransactionManager.transact(ActiveAndroid.getDatabase(), new Runnable() {
             @Override
             public void run() {
@@ -46,10 +46,10 @@ public class AATester {
         new Delete().from(AddressBook.class).execute();
     }
 
-    public static void testAAAddressItems(MainActivity mainActivity) {
+    public static void testAddressItems(MainActivity mainActivity) {
         new Delete().from(SimpleAddressItem.class).execute();
 
-        final List<SimpleAddressItem> activeAndroidModels =
+        final Collection<SimpleAddressItem> activeAndroidModels =
                 Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
 
         long startTime = System.currentTimeMillis();
@@ -63,7 +63,7 @@ public class AATester {
         mainActivity.logTime(startTime, "ActiveAndroid Save");
 
         startTime = System.currentTimeMillis();
-        List<SimpleAddressItem> activeAndroidModelLoad =
+        Collection<SimpleAddressItem> activeAndroidModelLoad =
                 new Select().from(SimpleAddressItem.class).execute();
         mainActivity.logTime(startTime, "ActiveAndroid Load");
 

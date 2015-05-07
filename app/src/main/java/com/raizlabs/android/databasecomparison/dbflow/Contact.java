@@ -1,6 +1,6 @@
 package com.raizlabs.android.databasecomparison.dbflow;
 
-import com.raizlabs.android.databasecomparison.IContact;
+import com.raizlabs.android.databasecomparison.interfaces.IContact;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;

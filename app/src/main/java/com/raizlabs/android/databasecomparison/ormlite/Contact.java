@@ -1,17 +1,25 @@
-package com.raizlabs.android.databasecomparison.sugar;
+package com.raizlabs.android.databasecomparison.ormlite;
 
-import com.orm.SugarRecord;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import com.raizlabs.android.databasecomparison.interfaces.IContact;
 
 /**
- * Description:
+ * Description: Contact DAO
  */
-public class Contact extends SugarRecord<Contact> implements IContact<AddressBook> {
+@DatabaseTable(tableName = "contact")
+public class Contact implements IContact<AddressBook> {
 
+    @DatabaseField(generatedId = true)
+    private int id;
+
+    @DatabaseField
     private String name;
 
+    @DatabaseField
     private String email;
 
+    @DatabaseField(foreign=true,foreignAutoRefresh=true)
     private AddressBook addressBook;
 
     @Override
@@ -46,6 +54,6 @@ public class Contact extends SugarRecord<Contact> implements IContact<AddressBoo
 
     @Override
     public void saveAll() {
-        super.save();
+
     }
 }

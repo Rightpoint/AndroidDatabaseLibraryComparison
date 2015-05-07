@@ -1,4 +1,4 @@
-package com.raizlabs.android.databasecomparison;
+package com.raizlabs.android.databasecomparison.interfaces;
 
 /**
  * Description:

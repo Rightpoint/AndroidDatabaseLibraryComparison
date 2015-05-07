@@ -1,23 +1,33 @@
-package com.raizlabs.android.databasecomparison.sugar;
+package com.raizlabs.android.databasecomparison.ormlite;
 
-import com.orm.SugarRecord;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import com.raizlabs.android.databasecomparison.interfaces.IAddressItem;
 
 /**
  * Description:
  */
-public class SimpleAddressItem extends SugarRecord<SimpleAddressItem> implements IAddressItem<AddressBook> {
+@DatabaseTable(tableName = "SimpleAddressItem")
+public class SimpleAddressItem implements IAddressItem<AddressBook> {
 
+    @DatabaseField(generatedId = true)
+    private int id;
 
+    @DatabaseField
     private String name;
 
+    @DatabaseField
     private String address;
 
+    @DatabaseField
     private String city;
 
+    @DatabaseField
     private String state;
 
+    @DatabaseField
     private long phone;
+
 
     @Override
     public void setName(String name) {
@@ -46,10 +56,11 @@ public class SimpleAddressItem extends SugarRecord<SimpleAddressItem> implements
 
     @Override
     public void setAddressBook(AddressBook addressBook) {
+
     }
 
     @Override
     public void saveAll() {
-        super.save();
+
     }
 }

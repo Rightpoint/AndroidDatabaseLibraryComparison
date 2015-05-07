@@ -7,22 +7,22 @@ import com.raizlabs.android.databasecomparison.MainApplication;
 import com.raizlabs.android.databasecomparison.Saver;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
  */
 public class SugarTester {
 
-    public static void testSugarAddressBooks(MainActivity mainActivity) {
+    public static void testAddressBooks(MainActivity mainActivity) {
         AddressItem.deleteAll(AddressItem.class);
         AddressBook.deleteAll(AddressBook.class);
         Contact.deleteAll(Contact.class);
 
-        List<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
+        Collection<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
                 Contact.class, AddressItem.class, MainActivity.ADDRESS_BOOK_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<AddressBook> finalAddressBooks = addressBooks;
+        final Collection<AddressBook> finalAddressBooks = addressBooks;
         TransactionManager.transact(MainApplication.getSugarDatabase().getDB(), new Runnable() {
             @Override
             public void run() {
@@ -41,10 +41,10 @@ public class SugarTester {
         Contact.deleteAll(Contact.class);
     }
 
-    public static void testSugarAddressItems(MainActivity mainActivity) {
+    public static void testAddressItems(MainActivity mainActivity) {
         SimpleAddressItem.deleteAll(SimpleAddressItem.class);
 
-        List<SimpleAddressItem> sugarModelList = Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
+        Collection<SimpleAddressItem> sugarModelList = Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
         long startTime = System.currentTimeMillis();
         SimpleAddressItem.saveInTx(sugarModelList);
         mainActivity.logTime(startTime, "Sugar Save");

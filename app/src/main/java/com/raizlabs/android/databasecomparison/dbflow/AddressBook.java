@@ -1,6 +1,6 @@
 package com.raizlabs.android.databasecomparison.dbflow;
 
-import com.raizlabs.android.databasecomparison.IAddressBook;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
@@ -10,7 +10,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.cache.BaseCacheableModel;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
@@ -29,9 +29,9 @@ public class AddressBook extends BaseCacheableModel implements IAddressBook<Addr
     @Column(name = "author")
     String author;
 
-    List<AddressItem> addresses;
+    Collection<AddressItem> addresses;
 
-    List<Contact> contacts;
+    Collection<Contact> contacts;
 
     public void setName(String name) {
         this.name = name;
@@ -41,25 +41,25 @@ public class AddressBook extends BaseCacheableModel implements IAddressBook<Addr
         this.author = author;
     }
 
-    public void setAddresses(List<AddressItem> addresses) {
+    public void setAddresses(Collection<AddressItem> addresses) {
         this.addresses = addresses;
     }
 
-    public List<AddressItem> getAddresses() {
+    public Collection<AddressItem> getAddresses() {
         if (addresses == null) {
             addresses = new Select().from(AddressItem.class).where(Condition.column(AddressItem$Table.ADDRESSBOOK_ADDRESSBOOK).is(id)).queryList();
         }
         return addresses;
     }
 
-    public List<Contact> getContacts() {
+    public Collection<Contact> getContacts() {
         if (contacts == null) {
             contacts = new Select().from(Contact.class).where(Condition.column(Contact$Table.ADDRESSBOOK_ADDRESSBOOK).is(id)).queryList();
         }
         return contacts;
     }
 
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Collection<Contact> contacts) {
         this.contacts = contacts;
     }
 

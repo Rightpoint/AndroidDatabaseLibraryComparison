@@ -1,20 +1,28 @@
 package com.raizlabs.android.databasecomparison;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+
+import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressItem;
+import com.raizlabs.android.databasecomparison.interfaces.IContact;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
  */
 public class Generator {
 
-    public static <AddressItem extends IAddressItem> List<AddressItem> getAddresses(Class<AddressItem> itemClass, int count) {
+    public static <AddressItem extends IAddressItem> Collection<AddressItem> getAddresses(Class<AddressItem> itemClass, int count) {
         return getAddresses(itemClass, count, null);
     }
 
-    public static <AddressItem extends IAddressItem, AddressBook extends IAddressBook<AddressItem, IContact>> List<AddressItem>
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static <AddressItem extends IAddressItem, AddressBook extends IAddressBook<AddressItem, IContact>> Collection<AddressItem>
     getAddresses(Class<AddressItem> itemClass, int count, AddressBook addressBook) {
-        List<AddressItem> sugarModelList = new ArrayList<>();
+        Collection<AddressItem> sugarModelList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             AddressItem sugarModel = null;
             try {
@@ -35,9 +43,10 @@ public class Generator {
         return sugarModelList;
     }
 
-    public static <AddressBook extends IAddressBook, Contact extends IContact> List<Contact>
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static <AddressBook extends IAddressBook, Contact extends IContact> Collection<Contact>
     getContacts(Class<Contact> contactClass, int count, AddressBook addressBook) {
-        List<Contact> sugarModelList = new ArrayList<>();
+        Collection<Contact> sugarModelList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Contact sugarModel = null;
             try {
@@ -55,14 +64,15 @@ public class Generator {
         return sugarModelList;
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <Contact extends IContact,
             AddressBook extends IAddressBook,
-            AddressItem extends IAddressItem<AddressBook>> List<AddressBook>
+            AddressItem extends IAddressItem<AddressBook>> Collection<AddressBook>
     createAddressBooks(Class<AddressBook> addressBookClass,
                        Class<Contact> contactClass,
                        Class<AddressItem> addressItemClass,
                        int count) {
-        List<AddressBook> addressBooks = new ArrayList<>();
+        Collection<AddressBook> addressBooks = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             AddressBook addressBook = null;
             try {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import com.raizlabs.android.databasecomparison.activeandroid.AATester;
 import com.raizlabs.android.databasecomparison.dbflow.DBFlowTester;
 import com.raizlabs.android.databasecomparison.greendao.GreenDaoTester;
+import com.raizlabs.android.databasecomparison.ormlite.OrmLiteTester;
 import com.raizlabs.android.databasecomparison.sprinkles.SprinklesTester;
 import com.raizlabs.android.databasecomparison.sugar.SugarTester;
 
@@ -88,11 +88,12 @@ public class MainActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                OrmLiteTester.testAddressItems(mainActivity);
                 GreenDaoTester.testAddressItems(mainActivity);
-                DBFlowTester.testDBFlowAddressItems(mainActivity);
-                SprinklesTester.testSprinklesAddressItems(mainActivity);
-                AATester.testAAAddressItems(mainActivity);
-                SugarTester.testSugarAddressItems(mainActivity);
+                DBFlowTester.testAddressItems(mainActivity);
+                SprinklesTester.testAddressItems(mainActivity);
+                AATester.testAddressItems(mainActivity);
+                SugarTester.testAddressItems(mainActivity);
                 mainActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -113,10 +114,11 @@ public class MainActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                OrmLiteTester.testAddressBooks(mainActivity);
                 GreenDaoTester.testAddressBooks(mainActivity);
-                DBFlowTester.testDBFlowAddressBooks(mainActivity);
-                SugarTester.testSugarAddressBooks(mainActivity);
-                AATester.testAAAddressBooks(mainActivity);
+                DBFlowTester.testAddressBooks(mainActivity);
+                SugarTester.testAddressBooks(mainActivity);
+                AATester.testAddressBooks(mainActivity);
                 mainActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

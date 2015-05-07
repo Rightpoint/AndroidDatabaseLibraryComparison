@@ -1,8 +1,6 @@
 package com.raizlabs.android.databasecomparison.sprinkles;
 
-import com.raizlabs.android.databasecomparison.IContact;
-
-import java.util.List;
+import com.raizlabs.android.databasecomparison.interfaces.IContact;
 
 import se.emilsjolander.sprinkles.Model;
 import se.emilsjolander.sprinkles.Query;
