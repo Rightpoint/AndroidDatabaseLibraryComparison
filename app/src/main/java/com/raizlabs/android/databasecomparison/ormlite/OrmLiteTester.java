@@ -16,6 +16,7 @@ import java.util.Collection;
  * Runs benchmarks for OrmLite
  */
 public class OrmLiteTester {
+    public static final String FRAMEWORK_NAME = "OrmLite";
     private static final String TAG = OrmLiteTester.class.getName();
 
     public static void testAddressBooks(MainActivity mainActivity) {
@@ -55,12 +56,12 @@ public class OrmLiteTester {
             } finally {
                 db.endTransaction();
             }
-            mainActivity.logTime(startTime, "OrmLite Save");
+            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
             startTime = System.currentTimeMillis();
             addressBooks = addressBookDao.queryForAll();
             Loader.loadAllInnerData(addressBooks);
-            mainActivity.logTime(startTime, "OrmLite Load");
+            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
         } catch (SQLException e) {
             Log.e(TAG, "Error clearing DB", e);
         }
@@ -94,11 +95,11 @@ public class OrmLiteTester {
             } finally {
                 db.endTransaction();
             }
-            mainActivity.logTime(startTime, "OrmLite Save");
+            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
             startTime = System.currentTimeMillis();
             simpleAddressItems = simpleItemDao.queryForAll();
-            mainActivity.logTime(startTime, "OrmLite Load");
+            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
         } catch (SQLException e) {
             Log.e(TAG, "Error clearing DB", e);
         }

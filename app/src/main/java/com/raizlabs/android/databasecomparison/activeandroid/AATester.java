@@ -15,6 +15,7 @@ import java.util.Collection;
  * Description:
  */
 public class AATester {
+    public static final String FRAMEWORK_NAME = "ActiveAndroid";
 
     public static void testAddressBooks(MainActivity mainActivity) {
         new Delete().from(AddressItem.class).execute();
@@ -34,12 +35,12 @@ public class AATester {
                 Saver.saveAll(finalAddressBooks);
             }
         });
-        mainActivity.logTime(startTime, "ActiveAndroid Save");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
         startTime = System.currentTimeMillis();
         addressBooks = new Select().from(AddressBook.class).execute();
         Loader.loadAllInnerData(addressBooks);
-        mainActivity.logTime(startTime, "ActiveAndroid Load");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
 
         new Delete().from(AddressItem.class).execute();
         new Delete().from(Contact.class).execute();
@@ -60,12 +61,12 @@ public class AATester {
                 Saver.saveAll(activeAndroidModels);
             }
         });
-        mainActivity.logTime(startTime, "ActiveAndroid Save");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
         startTime = System.currentTimeMillis();
         Collection<SimpleAddressItem> activeAndroidModelLoad =
                 new Select().from(SimpleAddressItem.class).execute();
-        mainActivity.logTime(startTime, "ActiveAndroid Load");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
 
         new Delete().from(SimpleAddressItem.class).execute();
     }

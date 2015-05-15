@@ -3,5 +3,8 @@
 
     <string name="app_name">Database Comparison</string>
     <string name="action_settings">Settings</string>
+    <string name="results">Results for %1$s:</string>
+    <string name="simple">Simple trial</string>
+    <string name="complex">Complex Trial</string>
 
 </resources>

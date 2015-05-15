@@ -13,6 +13,7 @@ import java.util.Collection;
  * Description:
  */
 public class DBFlowTester {
+    public static final String FRAMEWORK_NAME = "DBFlow";
 
     public static void testAddressBooks(MainActivity mainActivity) {
         com.raizlabs.android.dbflow.sql.language.Delete.tables(AddressItem.class,
@@ -30,16 +31,16 @@ public class DBFlowTester {
                 Saver.saveAll(finalAddressBooks);
             }
         });
-        mainActivity.logTime(startTime, "DBFlow Save");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
         startTime = System.currentTimeMillis();
         addressBooks = new Select().from(AddressBook.class).queryList();
         Loader.loadAllInnerData(addressBooks);
-        mainActivity.logTime(startTime, "DBFlow Load");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
 
 
         com.raizlabs.android.dbflow.sql.language.Delete.tables(AddressItem.class,
-                Contact.class, AddressBook.class);
+                                                               Contact.class, AddressBook.class);
     }
 
     public static void testAddressItems(MainActivity mainActivity) {
@@ -54,11 +55,11 @@ public class DBFlowTester {
                 Saver.saveAll(finalDbFlowModels);
             }
         });
-        mainActivity.logTime(startTime, "DBFlow Save");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
         startTime = System.currentTimeMillis();
         dbFlowModels = new Select().from(SimpleAddressItem.class).queryList();
-        mainActivity.logTime(startTime, "DBFlow Load");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
 
         com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);
     }

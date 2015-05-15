@@ -15,13 +15,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:text="Simple trial"
+            android:text="@string/simple"
             android:id="@+id/simple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="runSimpleTrial"/>
         <Button
-            android:text="Complex Trial"
+            android:text="@string/complex"
             android:id="@+id/complex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
     <TextView
         android:visibility="gone"
         android:id="@+id/resultsLabel"
-        android:text="Results:"
+        android:text="@string/results"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -47,5 +47,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import java.util.List;
  * Description:
  */
 public class GreenDaoTester {
+    public static final String FRAMEWORK_NAME = "GreenDAO";
 
     public static void testAddressItems(MainActivity mainActivity) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mainActivity, "notes-db", null);
@@ -30,13 +31,13 @@ public class GreenDaoTester {
 
         long startTime = System.currentTimeMillis();
         simpleAddressItemDao.insertOrReplaceInTx(addressItemList);
-        mainActivity.logTime(startTime, "GreenDao Save");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
-        startTime = System.currentTimeMillis();
+                             startTime = System.currentTimeMillis();
         simpleAddressItemDao.loadAll();
-        mainActivity.logTime(startTime, "GreenDao Load");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
 
-        simpleAddressItemDao.deleteAll();
+                             simpleAddressItemDao.deleteAll();
 
     }
 
@@ -57,7 +58,7 @@ public class GreenDaoTester {
             daoSession.getContactDao().insertInTx(addressBook.getContactList());
             daoSession.getAddressItemDao().insertInTx(addressBook.getAddressItemList());
         }
-        mainActivity.logTime(startTime, "GreenDAO Save");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
 
         startTime = System.currentTimeMillis();
         addressBooks = addressBookDao.loadAll();
@@ -68,9 +69,9 @@ public class GreenDaoTester {
                 contact.getAddressBook();
             }
         }
-        mainActivity.logTime(startTime, "GreenDAO Load");
+        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
 
-        addressBookDao.deleteAll();
+                             addressBookDao.deleteAll();
         daoSession.getAddressItemDao().deleteAll();
         daoSession.getContactDao().deleteAll();
     }
