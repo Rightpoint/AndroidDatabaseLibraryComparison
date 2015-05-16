@@ -3,16 +3,9 @@ package com.raizlabs.android.databasecomparison.dbflow;
 import com.raizlabs.android.databasecomparison.IAddressItem;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.cache.BaseCacheableModel;
-import com.raizlabs.android.dbflow.structure.cache.ModelCache;
-import com.raizlabs.android.dbflow.structure.cache.SparseArrayBasedCache;
-import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Description:
@@ -20,7 +13,8 @@ import java.util.Map;
 @Table(databaseName = DBFlowDatabase.NAME)
 public class SimpleAddressItem extends BaseCacheableModel implements IAddressItem<AddressBook> {
 
-    @Column(columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
+    @PrimaryKey(autoincrement = true)
+    @Column
     long id;
 
     @Column(name = "name")
@@ -70,7 +64,7 @@ public class SimpleAddressItem extends BaseCacheableModel implements IAddressIte
 
     @Override
     public void saveAll() {
-        super.insert(false);
+        super.insert();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.raizlabs.android.databasecomparison.greendao;
 
 import com.raizlabs.android.databasecomparison.IAddressItem;
+import com.raizlabs.android.databasecomparison.greendao.gen.AddressBook;
 
 /**
  * Description:

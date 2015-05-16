@@ -2,7 +2,9 @@ package com.raizlabs.android.databasecomparison.dbflow;
 
 import com.raizlabs.android.databasecomparison.IContact;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
@@ -13,10 +15,11 @@ import java.util.Map;
 /**
  * Description:
  */
-@Table(value = "contact", databaseName = DBFlowDatabase.NAME)
+@Table(tableName = "contact", databaseName = DBFlowDatabase.NAME)
 public class Contact extends BaseModel implements IContact<AddressBook> {
 
-    @Column(name = "id", columnType = Column.PRIMARY_KEY_AUTO_INCREMENT)
+    @PrimaryKey(autoincrement = true)
+    @Column
     long id;
 
     @Column(name = "name")
@@ -25,10 +28,10 @@ public class Contact extends BaseModel implements IContact<AddressBook> {
     @Column(name = "email")
     String email;
 
-    @Column(name = "addressBook", columnType = Column.FOREIGN_KEY,
-            references = {@ForeignKeyReference(columnName = "addressBook",
-                    foreignColumnName = "id", columnType = long.class)},
-    saveForeignKeyModel = false)
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "addressBook",
+                                                   foreignColumnName = "id", columnType = long.class)},
+                saveForeignKeyModel = false)
+    @Column
     ForeignKeyContainer<AddressBook> addressBook;
 
     @Override
@@ -67,6 +70,6 @@ public class Contact extends BaseModel implements IContact<AddressBook> {
 
     @Override
     public void saveAll() {
-        super.insert(false);
+        super.insert();
     }
 }

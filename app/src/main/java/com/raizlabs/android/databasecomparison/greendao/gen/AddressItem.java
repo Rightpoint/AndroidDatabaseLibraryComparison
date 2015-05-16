@@ -1,5 +1,6 @@
 package com.raizlabs.android.databasecomparison.greendao.gen;
 
+import com.raizlabs.android.databasecomparison.IAddressItem;
 import com.raizlabs.android.databasecomparison.greendao.gen.DaoSession;
 import de.greenrobot.dao.DaoException;
 
@@ -7,7 +8,7 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table ADDRESS_ITEM.
  */
-public class AddressItem {
+public class AddressItem implements IAddressItem<AddressBook> {
 
     private Long id;
     private String name;
@@ -88,6 +89,11 @@ public class AddressItem {
         this.state = state;
     }
 
+    @Override
+    public void setPhone(long phone) {
+        setPhone((Long)phone);
+    }
+
     public Long getPhone() {
         return phone;
     }
@@ -145,4 +151,7 @@ public class AddressItem {
         myDao.refresh(this);
     }
 
+    @Override
+    public void saveAll() {
+    }
 }

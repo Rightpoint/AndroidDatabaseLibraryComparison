@@ -18,8 +18,13 @@ android {
 
 dependencies {
 
-    apt 'com.raizlabs.android:DBFlow-Compiler:1.4.5'
-    mod 'com.raizlabs.android:{DBFlow, DBFlow-Core}:1.4.5'
+    apt 'com.raizlabs.android:DBFlow-Compiler:2.0.0'
+    mod "com.raizlabs.android:{DBFlow-Core, DBFlow}:2.0.0"
+
+    // This switches to a local copy of the DBFlow repo
+    //apt project(':Libraries:DBFlow:compiler')
+    //compile project(":Libraries:DBFlow:library")
+    //compile project(":Libraries:DBFlow:flowcore")
 
     mod 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     mod 'se.emilsjolander:sprinkles:1.3.1'
