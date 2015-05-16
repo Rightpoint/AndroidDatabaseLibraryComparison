@@ -19,8 +19,7 @@ android {
 dependencies {
 
     apt 'com.raizlabs.android:DBFlow-Compiler:2.0.0'
-    compile "com.raizlabs.android:DBFlow-Core:2.0.0"
-    compile "com.raizlabs.android:DBFlow:2.0.0"
+    mod "com.raizlabs.android:{DBFlow-Core, DBFlow}:2.0.0"
 
     // This switches to a local copy of the DBFlow repo
     //apt project(':Libraries:DBFlow:compiler')
