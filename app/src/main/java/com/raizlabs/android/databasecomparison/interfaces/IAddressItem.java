@@ -1,7 +1,7 @@
 package com.raizlabs.android.databasecomparison.interfaces;
 
 /**
- * Description:
+ * Description: interface for address book items objects in address book
  */
 public interface IAddressItem<AddressBook extends IAddressBook> extends ISaveable {
 

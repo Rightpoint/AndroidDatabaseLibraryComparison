@@ -3,7 +3,7 @@ package com.raizlabs.android.databasecomparison.interfaces;
 import java.util.Collection;
 
 /**
- * Description:
+ * Description: interface for address book objects
  */
 public interface IAddressBook<AddressItem extends IAddressItem, Contact extends IContact> extends ISaveable {
 
