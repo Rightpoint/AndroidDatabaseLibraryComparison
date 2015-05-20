@@ -11,6 +11,7 @@ import com.raizlabs.android.databasecomparison.Saver;
 import java.util.Collection;
 import java.util.List;
 
+import se.emilsjolander.sprinkles.ModelList;
 import se.emilsjolander.sprinkles.Query;
 import se.emilsjolander.sprinkles.Transaction;
 
@@ -45,10 +46,16 @@ public class SprinklesTester {
                 Generator.getAddresses(AddressItem.class, MainActivity.LOOP_COUNT);
 
         long startTime = System.currentTimeMillis();
-        // Reuse method so we don't have to write
+        // first copy everything into a model list so we can do a saveAll on it
+        //NOTE: you'd think this would be faster than calling .save(trans) on each object, but it's not :-P
+        ModelList<AddressItem> addressItemModelList = new ModelList<>();
+        for (AddressItem addressItem : sprinkleModels) {
+            addressItemModelList.add(addressItem);
+        }
+        // save everything in one transaction for best speed
         Transaction transaction = new Transaction();
         try {
-            Saver.saveAll(sprinkleModels);
+            addressItemModelList.saveAll(transaction);
             transaction.setSuccessful(true);
         } finally {
             transaction.finish();

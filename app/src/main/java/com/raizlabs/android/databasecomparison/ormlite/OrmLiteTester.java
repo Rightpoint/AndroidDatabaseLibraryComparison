@@ -62,6 +62,11 @@ public class OrmLiteTester {
             addressBooks = addressBookDao.queryForAll();
             Loader.loadAllInnerData(addressBooks);
             mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
+
+            // clean out DB for next run
+            contactDao.deleteBuilder().delete();
+            addressItemDao.deleteBuilder().delete();
+            addressBookDao.deleteBuilder().delete();
         } catch (SQLException e) {
             Log.e(TAG, "Error clearing DB", e);
         }
@@ -100,6 +105,9 @@ public class OrmLiteTester {
             startTime = System.currentTimeMillis();
             simpleAddressItems = simpleItemDao.queryForAll();
             mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
+
+            // clean out DB for next run
+            simpleItemDao.deleteBuilder().delete();
         } catch (SQLException e) {
             Log.e(TAG, "Error clearing DB", e);
         }
