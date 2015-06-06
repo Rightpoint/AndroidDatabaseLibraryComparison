@@ -1,6 +1,6 @@
 package com.raizlabs.android.databasecomparison.sprinkles;
 
-import com.raizlabs.android.databasecomparison.IAddressItem;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressItem;
 
 import se.emilsjolander.sprinkles.Model;
 import se.emilsjolander.sprinkles.annotations.AutoIncrement;

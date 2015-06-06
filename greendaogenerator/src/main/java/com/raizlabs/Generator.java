@@ -2,8 +2,6 @@ package com.raizlabs;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Property;
-import de.greenrobot.daogenerator.PropertyType;
 import de.greenrobot.daogenerator.Schema;
 
 public class Generator {

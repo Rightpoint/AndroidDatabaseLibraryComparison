@@ -1,64 +1,70 @@
 package com.raizlabs.android.databasecomparison.dbflow;
 
+import android.content.Context;
+
 import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.Loader;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.Saver;
+import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import java.util.List;
+import java.util.Collection;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Description:
  */
 public class DBFlowTester {
+    public static final String FRAMEWORK_NAME = "DBFlow";
 
-    public static void testDBFlowAddressBooks() {
+    public static void testAddressBooks(Context context) {
         com.raizlabs.android.dbflow.sql.language.Delete.tables(AddressItem.class,
                 Contact.class, AddressBook.class);
 
-        List<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
+        Collection<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
                 Contact.class, AddressItem.class,
                 MainActivity.ADDRESS_BOOK_COUNT);
 
         long startTime = System.currentTimeMillis();
-        final List<AddressBook> finalAddressBooks = addressBooks;
+        final Collection<AddressBook> finalAddressBooks = addressBooks;
         TransactionManager.transact(DBFlowDatabase.NAME, new Runnable() {
             @Override
             public void run() {
                 Saver.saveAll(finalAddressBooks);
             }
         });
-        MainActivity.logTime(startTime, "DBFlow save addresses");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         addressBooks = new Select().from(AddressBook.class).queryList();
         Loader.loadAllInnerData(addressBooks);
-        MainActivity.logTime(startTime, "DBFlow load addresses");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
 
         com.raizlabs.android.dbflow.sql.language.Delete.tables(AddressItem.class,
-                Contact.class, AddressBook.class);
+                                                               Contact.class, AddressBook.class);
     }
 
-    public static void testDBFlowAddressItems() {
+    public static void testAddressItems(Context context) {
         com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);
-        List<SimpleAddressItem> dbFlowModels =
+        Collection<SimpleAddressItem> dbFlowModels =
                 Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<SimpleAddressItem> finalDbFlowModels = dbFlowModels;
+        final Collection<SimpleAddressItem> finalDbFlowModels = dbFlowModels;
         TransactionManager.transact(DBFlowDatabase.NAME, new Runnable() {
             @Override
             public void run() {
                 Saver.saveAll(finalDbFlowModels);
             }
         });
-        MainActivity.logTime(startTime, "DBFlow");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         dbFlowModels = new Select().from(SimpleAddressItem.class).queryList();
-        MainActivity.logTime(startTime, "DBFlow load");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
         com.raizlabs.android.dbflow.sql.language.Delete.table(SimpleAddressItem.class);
     }

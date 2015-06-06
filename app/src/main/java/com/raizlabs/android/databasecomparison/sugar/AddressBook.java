@@ -3,9 +3,9 @@ package com.raizlabs.android.databasecomparison.sugar;
 import com.orm.StringUtil;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
-import com.raizlabs.android.databasecomparison.IAddressBook;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Description:
@@ -17,10 +17,10 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
     private String author;
 
     @Ignore
-    List<AddressItem> addresses;
+    Collection<AddressItem> addresses;
 
     @Ignore
-    List<Contact> contacts;
+    Collection<Contact> contacts;
 
     @Override
     public void setName(String name) {
@@ -33,12 +33,12 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
     }
 
     @Override
-    public void setAddresses(List<AddressItem> addresses) {
+    public void setAddresses(Collection<AddressItem> addresses) {
         this.addresses = addresses;
     }
 
     @Override
-    public List<AddressItem> getAddresses() {
+    public Collection<AddressItem> getAddresses() {
         if(addresses == null) {
             addresses = AddressItem.find(AddressItem.class, StringUtil.toSQLName("addressBook") + "= ?",
                     String.valueOf(id));
@@ -47,7 +47,7 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
     }
 
     @Override
-    public List<Contact> getContacts() {
+    public Collection<Contact> getContacts() {
         if(contacts == null) {
             contacts = Contact.find(Contact.class, StringUtil.toSQLName("addressBook") + " = ?",
                     String.valueOf(id));
@@ -56,7 +56,7 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
     }
 
     @Override
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Collection<Contact> contacts) {
         this.contacts = contacts;
     }
 

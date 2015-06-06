@@ -1,5 +1,7 @@
 package com.raizlabs.android.databasecomparison.activeandroid;
 
+import android.content.Context;
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
@@ -7,49 +9,53 @@ import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.Loader;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.Saver;
+import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 
-import java.util.List;
+import java.util.Collection;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Description:
  */
 public class AATester {
+    public static final String FRAMEWORK_NAME = "ActiveAndroid";
 
-    public static void testAAAddressBooks() {
+    public static void testAddressBooks(Context context) {
         new Delete().from(AddressItem.class).execute();
         new Delete().from(Contact.class).execute();
         new Delete().from(AddressBook.class).execute();
 
-        List<AddressBook> addressBooks =
+        Collection<AddressBook> addressBooks =
                 Generator.createAddressBooks(AddressBook.class,
                         Contact.class,
                         AddressItem.class,
                         MainActivity.ADDRESS_BOOK_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<AddressBook> finalAddressBooks = addressBooks;
+        final Collection<AddressBook> finalAddressBooks = addressBooks;
         TransactionManager.transact(ActiveAndroid.getDatabase(), new Runnable() {
             @Override
             public void run() {
                 Saver.saveAll(finalAddressBooks);
             }
         });
-        MainActivity.logTime(startTime, "AA save addresses");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         addressBooks = new Select().from(AddressBook.class).execute();
         Loader.loadAllInnerData(addressBooks);
-        MainActivity.logTime(startTime, "AA load addresses");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
         new Delete().from(AddressItem.class).execute();
         new Delete().from(Contact.class).execute();
         new Delete().from(AddressBook.class).execute();
     }
 
-    public static void testAAAddressItems() {
+    public static void testAddressItems(Context context) {
         new Delete().from(SimpleAddressItem.class).execute();
 
-        final List<SimpleAddressItem> activeAndroidModels =
+        final Collection<SimpleAddressItem> activeAndroidModels =
                 Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
 
         long startTime = System.currentTimeMillis();
@@ -60,12 +66,12 @@ public class AATester {
                 Saver.saveAll(activeAndroidModels);
             }
         });
-        MainActivity.logTime(startTime, "Active android");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
-        List<SimpleAddressItem> activeAndroidModelLoad =
+        Collection<SimpleAddressItem> activeAndroidModelLoad =
                 new Select().from(SimpleAddressItem.class).execute();
-        MainActivity.logTime(startTime, "AA load");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
         new Delete().from(SimpleAddressItem.class).execute();
     }

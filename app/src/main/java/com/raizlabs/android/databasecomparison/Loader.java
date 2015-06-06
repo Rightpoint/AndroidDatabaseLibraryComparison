@@ -1,6 +1,9 @@
 package com.raizlabs.android.databasecomparison;
 
-import java.util.List;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
+import com.raizlabs.android.databasecomparison.interfaces.IContact;
+
+import java.util.Collection;
 
 /**
  * Description:
@@ -12,11 +15,11 @@ public class Loader {
      *
      * @param addressBooks
      */
-    public static void loadAllInnerData(List<? extends IAddressBook> addressBooks) {
+    public static void loadAllInnerData(Collection<? extends IAddressBook> addressBooks) {
         for (IAddressBook addressBook : addressBooks) {
             addressBook.getAddresses();
 
-            List<IContact> contacts = addressBook.getContacts();
+            Collection<IContact> contacts = addressBook.getContacts();
 
             for (IContact contact : contacts) {
                 contact.getAddressBookField();

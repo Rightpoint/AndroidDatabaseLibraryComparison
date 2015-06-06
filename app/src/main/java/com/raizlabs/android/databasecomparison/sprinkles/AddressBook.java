@@ -1,8 +1,8 @@
 package com.raizlabs.android.databasecomparison.sprinkles;
 
-import com.raizlabs.android.databasecomparison.IAddressBook;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
 
-import java.util.List;
+import java.util.Collection;
 
 import se.emilsjolander.sprinkles.Model;
 import se.emilsjolander.sprinkles.Query;
@@ -28,9 +28,9 @@ public class AddressBook extends Model implements IAddressBook<SimpleAddressItem
     @Column("author")
     private String author;
 
-    List<SimpleAddressItem> addresses;
+    Collection<SimpleAddressItem> addresses;
 
-    List<Contact> contacts;
+    Collection<Contact> contacts;
 
     @Override
     public void setName(String name) {
@@ -43,12 +43,12 @@ public class AddressBook extends Model implements IAddressBook<SimpleAddressItem
     }
 
     @Override
-    public void setAddresses(List<SimpleAddressItem> addresses) {
+    public void setAddresses(Collection<SimpleAddressItem> addresses) {
         this.addresses = addresses;
     }
 
     @Override
-    public List<SimpleAddressItem> getAddresses() {
+    public Collection<SimpleAddressItem> getAddresses() {
         if (addresses == null) {
             addresses = Query.many(SimpleAddressItem.class, "addressBook = ?",
                     String.valueOf(id)).get().asList();
@@ -57,7 +57,7 @@ public class AddressBook extends Model implements IAddressBook<SimpleAddressItem
     }
 
     @Override
-    public List<Contact> getContacts() {
+    public Collection<Contact> getContacts() {
         if (contacts == null) {
             contacts = Query.many(Contact.class, "addressBook = ?",
                     String.valueOf(id)).get().asList();
@@ -70,7 +70,7 @@ public class AddressBook extends Model implements IAddressBook<SimpleAddressItem
     }
 
     @Override
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Collection<Contact> contacts) {
         this.contacts = contacts;
     }
 

@@ -1,0 +1,67 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'java'
+apply plugin: 'com.raizlabs.griddle'
+apply plugin: 'application'
+
+mainClassName = "com.raizlabs.DatabaseConfigUtil"
+
+ext.CfgFileName = 'ormlite_config.txt'
+ext.SrcCfgPath = '../app/src/main/res/raw/'
+ext.GenCfgPath = 'res/raw/'
+ext.SrcModelsPath = '../app/src/main/java/com/raizlabs/android/databasecomparison/ormlite/'
+ext.DstModelsPath = 'src/main/java/com/raizlabs/android/databasecomparison/ormlite/'
+ext.SrcInterfacesPath = '../app/src/main/java/com/raizlabs/android/databasecomparison/interfaces/'
+ext.DstInterfacesPath = 'src/main/java/com/raizlabs/android/databasecomparison/interfaces/'
+
+task cleanModels(type: Delete) {
+    delete DstModelsPath
+    delete DstInterfacesPath
+}
+
+task copyModelsTask(type: Copy) {
+    from SrcModelsPath
+    into DstModelsPath
+    exclude '**/DatabaseHelper.java'
+    exclude '**/OrmLiteTester.java'
+}
+
+task copyInterfacesTask(type: Copy) {
+    from SrcInterfacesPath
+    into DstInterfacesPath
+}
+
+
+task copyConfigBackTask(type: Copy) {
+    from GenCfgPath+CfgFileName
+    into SrcCfgPath
+}
+
+
+task runOrmGenTask(type: Exec) {
+    workingDir './build/classes/debug'
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'java', '-cp', '../../../libs/*:.', 'DatabaseConfigUtil'
+    } else {
+        //commandLine 'pwd'
+        commandLine 'java', '-cp', '../../../libs/*:.', 'DatabaseConfigUtil'
+    }
+}
+
+
+task genOrmCfg(dependsOn: ['run', 'clean', 'copyConfigBackTask', 'copyModelsTask', 'copyInterfacesTask', 'cleanModels']) {
+    println "Generating OrmLite Config..."
+    // the following locks the order of execution
+
+    cleanModels.mustRunAfter clean
+    run.mustRunAfter copyModelsTask
+    copyModelsTask.mustRunAfter copyInterfacesTask
+    copyConfigBackTask.mustRunAfter run
+}
+
+defaultTasks 'genOrmCfg'
+
+dependencies {
+    mod 'com.j256.ormlite:ormlite-android:4.48'
+}
+

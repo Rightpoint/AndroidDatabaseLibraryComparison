@@ -1,7 +1,7 @@
-package com.raizlabs.android.databasecomparison;
+package com.raizlabs.android.databasecomparison.interfaces;
 
 /**
- * Description:
+ * Description: interface for contact objects in address book
  */
 public interface IContact<AddressBook extends IAddressBook> extends ISaveable {
 

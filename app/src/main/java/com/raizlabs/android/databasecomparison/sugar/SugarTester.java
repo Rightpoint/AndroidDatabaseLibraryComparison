@@ -1,57 +1,63 @@
 package com.raizlabs.android.databasecomparison.sugar;
 
+import android.content.Context;
+
 import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.Loader;
 import com.raizlabs.android.databasecomparison.MainActivity;
 import com.raizlabs.android.databasecomparison.MainApplication;
 import com.raizlabs.android.databasecomparison.Saver;
+import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 
-import java.util.List;
+import java.util.Collection;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Description:
  */
 public class SugarTester {
+    public static final String FRAMEWORK_NAME = "Sugar";
 
-    public static void testSugarAddressBooks() {
+    public static void testAddressBooks(Context context) {
         AddressItem.deleteAll(AddressItem.class);
         AddressBook.deleteAll(AddressBook.class);
         Contact.deleteAll(Contact.class);
 
-        List<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
+        Collection<AddressBook> addressBooks = Generator.createAddressBooks(AddressBook.class,
                 Contact.class, AddressItem.class, MainActivity.ADDRESS_BOOK_COUNT);
         long startTime = System.currentTimeMillis();
-        final List<AddressBook> finalAddressBooks = addressBooks;
+        final Collection<AddressBook> finalAddressBooks = addressBooks;
         TransactionManager.transact(MainApplication.getSugarDatabase().getDB(), new Runnable() {
             @Override
             public void run() {
                 Saver.saveAll(finalAddressBooks);
             }
         });
-        MainActivity.logTime(startTime, "Sugar save addresses");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         addressBooks = AddressBook.listAll(AddressBook.class);
         Loader.loadAllInnerData(addressBooks);
-        MainActivity.logTime(startTime, "Sugar load addresses");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
         AddressItem.deleteAll(AddressItem.class);
         AddressBook.deleteAll(AddressBook.class);
         Contact.deleteAll(Contact.class);
     }
 
-    public static void testSugarAddressItems() {
+    public static void testAddressItems(Context context) {
         SimpleAddressItem.deleteAll(SimpleAddressItem.class);
 
-        List<SimpleAddressItem> sugarModelList = Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
+        Collection<SimpleAddressItem> sugarModelList = Generator.getAddresses(SimpleAddressItem.class, MainActivity.LOOP_COUNT);
         long startTime = System.currentTimeMillis();
         SimpleAddressItem.saveInTx(sugarModelList);
-        MainActivity.logTime(startTime, "Sugar");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         sugarModelList = SimpleAddressItem.listAll(SimpleAddressItem.class);
-        MainActivity.logTime(startTime, "Sugar load");
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
         SimpleAddressItem.deleteAll(SimpleAddressItem.class);
     }

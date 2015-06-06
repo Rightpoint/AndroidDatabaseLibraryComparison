@@ -1,7 +1,7 @@
 package com.raizlabs.android.databasecomparison.sugar;
 
 import com.orm.SugarRecord;
-import com.raizlabs.android.databasecomparison.IContact;
+import com.raizlabs.android.databasecomparison.interfaces.IContact;
 
 /**
  * Description:

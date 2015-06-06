@@ -3,7 +3,7 @@ package com.raizlabs.android.databasecomparison.activeandroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.raizlabs.android.databasecomparison.IAddressItem;
+import com.raizlabs.android.databasecomparison.interfaces.IAddressItem;
 
 /**
  * Description:

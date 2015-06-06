@@ -1,0 +1,107 @@
+#
+# generated on 2015/05/07 05:07:45
+#
+# --table-start--
+dataClass=com.raizlabs.android.databasecomparison.ormlite.AddressBook
+tableName=AddressBook
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=author
+# --field-end--
+# --field-start--
+fieldName=addresses
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=contacts
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.raizlabs.android.databasecomparison.ormlite.AddressItem
+tableName=AddressItem
+# --table-fields-start--
+# --field-start--
+fieldName=addressBook
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=address
+# --field-end--
+# --field-start--
+fieldName=city
+# --field-end--
+# --field-start--
+fieldName=state
+# --field-end--
+# --field-start--
+fieldName=phone
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.raizlabs.android.databasecomparison.ormlite.Contact
+tableName=contact
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=email
+# --field-end--
+# --field-start--
+fieldName=addressBook
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.raizlabs.android.databasecomparison.ormlite.SimpleAddressItem
+tableName=SimpleAddressItem
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=address
+# --field-end--
+# --field-start--
+fieldName=city
+# --field-end--
+# --field-start--
+fieldName=state
+# --field-end--
+# --field-start--
+fieldName=phone
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

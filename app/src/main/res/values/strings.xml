@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DatabaseComparison</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Database Comparison</string>
     <string name="action_settings">Settings</string>
+    <string name="results">Results for %1$s:</string>
+    <string name="simple">Simple trial</string>
+    <string name="complex">Complex Trial</string>
 
 </resources>
