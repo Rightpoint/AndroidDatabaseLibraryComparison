@@ -1,5 +1,6 @@
 package com.raizlabs.android.databasecomparison.ormlite;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -8,9 +9,12 @@ import com.j256.ormlite.dao.Dao;
 import com.raizlabs.android.databasecomparison.Generator;
 import com.raizlabs.android.databasecomparison.Loader;
 import com.raizlabs.android.databasecomparison.MainActivity;
+import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
 
 import java.sql.SQLException;
 import java.util.Collection;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Runs benchmarks for OrmLite
@@ -19,8 +23,8 @@ public class OrmLiteTester {
     public static final String FRAMEWORK_NAME = "OrmLite";
     private static final String TAG = OrmLiteTester.class.getName();
 
-    public static void testAddressBooks(MainActivity mainActivity) {
-        DatabaseHelper dbHelper = OpenHelperManager.getHelper(mainActivity, DatabaseHelper.class);
+    public static void testAddressBooks(Context context) {
+        DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
 
         try {
             dbHelper.getAddressBookDao().deleteBuilder().delete();
@@ -56,12 +60,12 @@ public class OrmLiteTester {
             } finally {
                 db.endTransaction();
             }
-            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
+            EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
             startTime = System.currentTimeMillis();
             addressBooks = addressBookDao.queryForAll();
             Loader.loadAllInnerData(addressBooks);
-            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
+            EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
             // clean out DB for next run
             contactDao.deleteBuilder().delete();
@@ -74,8 +78,8 @@ public class OrmLiteTester {
         OpenHelperManager.releaseHelper();
     }
 
-    public static void testAddressItems(MainActivity mainActivity) {
-        DatabaseHelper dbHelper = OpenHelperManager.getHelper(mainActivity, DatabaseHelper.class);
+    public static void testAddressItems(Context context) {
+        DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
 
         try {
             dbHelper.getSimpleAddressItemDao().deleteBuilder().delete();
@@ -100,11 +104,11 @@ public class OrmLiteTester {
             } finally {
                 db.endTransaction();
             }
-            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
+            EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
             startTime = System.currentTimeMillis();
             simpleAddressItems = simpleItemDao.queryForAll();
-            mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
+            EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
             // clean out DB for next run
             simpleItemDao.deleteBuilder().delete();

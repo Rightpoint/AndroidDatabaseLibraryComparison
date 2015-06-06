@@ -1,6 +1,7 @@
 package com.raizlabs.android.databasecomparison;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.raizlabs.android.databasecomparison.activeandroid.AATester;
 import com.raizlabs.android.databasecomparison.dbflow.DBFlowTester;
+import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
+import com.raizlabs.android.databasecomparison.events.TrialCompletedEvent;
 import com.raizlabs.android.databasecomparison.greendao.GreenDaoTester;
 import com.raizlabs.android.databasecomparison.ormlite.OrmLiteTester;
 import com.raizlabs.android.databasecomparison.sprinkles.SprinklesTester;
@@ -22,7 +25,8 @@ import com.raizlabs.android.databasecomparison.sugar.SugarTester;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends Activity {
@@ -33,6 +37,10 @@ public class MainActivity extends Activity {
 
     public static final int ADDRESS_BOOK_COUNT = 50;
 
+    private static final String STATE_MAPDATA = "mapData";
+    private static final String STATE_RUNNING_TESTS = "runningTests";
+    private static final String STATE_TEST_NAME = "testName";
+
     private Button simpleTrialButton;
     private Button complexTrialButton;
     private TextView resultsLabel;
@@ -41,7 +49,10 @@ public class MainActivity extends Activity {
     private static ProgressBar progressBar;
 
     private BarChart chartView;
-    private Map<String, ArrayList<BarEntry>> chartEntrySets = new LinkedHashMap<>();
+    private LinkedHashMap<String, ArrayList<BarEntry>> chartEntrySets = new LinkedHashMap<>();
+    private boolean runningTests = false;
+    private String runningTestName;
+    private Thread runTestThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,52 @@ public class MainActivity extends Activity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         progressBar.setIndeterminate(true);
         chartView = (BarChart) findViewById(R.id.chart);
+
+        if (savedInstanceState != null) {
+            runningTests = savedInstanceState.getBoolean(STATE_RUNNING_TESTS);
+            runningTestName = savedInstanceState.getString(STATE_TEST_NAME);
+            chartEntrySets = (LinkedHashMap<String, ArrayList<BarEntry>>) savedInstanceState.getSerializable(STATE_MAPDATA);
+
+            setBusyUI(runningTests, runningTestName);
+            if (!runningTests && (chartEntrySets.size() > 0)) {
+                // graph existing data
+                initChart();
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(STATE_RUNNING_TESTS, runningTests);
+        savedInstanceState.putString(STATE_TEST_NAME, runningTestName);
+        savedInstanceState.putSerializable(STATE_MAPDATA, chartEntrySets);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    // handle data collection event
+    public void onEvent(LogTestDataEvent event) {
+        logTime(event.getStartTime(), event.getFramework(), event.getEventName());
+    }
+
+    // handle graphing event
+    public void onEventMainThread(TrialCompletedEvent event){
+        initChart();
+        runningTests = false;
+        setBusyUI(false, event.getTrialName());
     }
 
     /**
@@ -81,23 +138,30 @@ public class MainActivity extends Activity {
     }
 
     private void setBusyUI(boolean enabled, String testName) {
+        runningTestName = testName;
         if (enabled) {
+            runningTests = true;
             resultsStringBuilder.setLength(0);
             resultsTextView.setVisibility(View.VISIBLE);
-            resultsLabel.setText(getResources().getString(R.string.results, testName));
-            resultsLabel.setVisibility(View.VISIBLE);
             chartView.setVisibility(View.GONE);
             enableButtons(false);
             progressBar.setVisibility(View.VISIBLE);
         } else {
+            runningTests = false;
             resultsTextView.setVisibility(View.GONE);
-            chartView.setVisibility(View.VISIBLE);
+            if (runningTestName != null) {
+                chartView.setVisibility(View.VISIBLE);
+            }
             enableButtons(true);
             progressBar.setVisibility(View.GONE);
         }
+        if (runningTestName != null) {
+            resultsLabel.setText(getResources().getString(R.string.results, testName));
+            resultsLabel.setVisibility(View.VISIBLE);
+        }
     }
 
-    private void initChart(String chartName) {
+    private void initChart() {
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         // note that we show save first because that's how we initialize the DB
         for (String frameworkName : chartEntrySets.keySet()) {
@@ -112,7 +176,7 @@ public class MainActivity extends Activity {
         xAxisLabels.add("Load");
         BarData data = new BarData(xAxisLabels, dataSets);
         chartView.setData(data);
-        chartView.setDescription(null);
+        chartView.setDescription(null); // this takes up too much space, so clear it
         chartView.animateXY(2000, 2000);
         chartView.invalidate();
     }
@@ -162,25 +226,21 @@ public class MainActivity extends Activity {
     public void runSimpleTrial(View v) {
         setBusyUI(true, getResources().getString(R.string.simple));
         resetChart();
-        final MainActivity mainActivity = this;
-        new Thread(new Runnable() {
+        runTestThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                OrmLiteTester.testAddressItems(mainActivity);
-                GreenDaoTester.testAddressItems(mainActivity);
-                DBFlowTester.testAddressItems(mainActivity);
-                SprinklesTester.testAddressItems(mainActivity);
-                AATester.testAddressItems(mainActivity);
-                SugarTester.testAddressItems(mainActivity);
-                mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mainActivity.setBusyUI(false, null);
-                        initChart("Simple");
-                    }
-                });
+                runningTests = true;
+                Context applicationContext = MainActivity.this.getApplicationContext();
+                OrmLiteTester.testAddressItems(applicationContext);
+                GreenDaoTester.testAddressItems(applicationContext);
+                DBFlowTester.testAddressItems(applicationContext);
+                SprinklesTester.testAddressItems(applicationContext);
+                AATester.testAddressItems(applicationContext);
+                SugarTester.testAddressItems(applicationContext);
+                EventBus.getDefault().post(new TrialCompletedEvent(getResources().getString(R.string.simple)));
             }
-        }).start();
+        });
+        runTestThread.start();
     }
 
     /**
@@ -190,23 +250,18 @@ public class MainActivity extends Activity {
     public void runComplexTrial(View v) {
         setBusyUI(true, getResources().getString(R.string.complex));
         resetChart();
-        final MainActivity mainActivity = this;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                OrmLiteTester.testAddressBooks(mainActivity);
-                GreenDaoTester.testAddressBooks(mainActivity);
-                DBFlowTester.testAddressBooks(mainActivity);
-                SprinklesTester.testAddressBooks(mainActivity);
-                AATester.testAddressBooks(mainActivity);
-                SugarTester.testAddressBooks(mainActivity);
-                mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mainActivity.setBusyUI(false, null);
-                        initChart("Complex");
-                    }
-                });
+                runningTests = true;
+                Context applicationContext = MainActivity.this.getApplicationContext();
+                OrmLiteTester.testAddressBooks(applicationContext);
+                GreenDaoTester.testAddressBooks(applicationContext);
+                DBFlowTester.testAddressBooks(applicationContext);
+                SprinklesTester.testAddressBooks(applicationContext);
+                AATester.testAddressBooks(applicationContext);
+                SugarTester.testAddressBooks(applicationContext);
+                EventBus.getDefault().post(new TrialCompletedEvent(getResources().getString(R.string.complex)));
             }
         }).start();
     }

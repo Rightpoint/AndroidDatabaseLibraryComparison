@@ -3,6 +3,7 @@ package com.raizlabs.android.databasecomparison.greendao;
 import android.content.Context;
 
 import com.raizlabs.android.databasecomparison.MainActivity;
+import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
 import com.raizlabs.android.databasecomparison.greendao.gen.AddressBook;
 import com.raizlabs.android.databasecomparison.greendao.gen.AddressBookDao;
 import com.raizlabs.android.databasecomparison.greendao.gen.Contact;
@@ -14,14 +15,16 @@ import com.raizlabs.android.databasecomparison.greendao.gen.SimpleAddressItemDao
 import java.util.Collection;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Description:
  */
 public class GreenDaoTester {
     public static final String FRAMEWORK_NAME = "GreenDAO";
 
-    public static void testAddressItems(MainActivity mainActivity) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mainActivity, "notes-db", null);
+    public static void testAddressItems(Context context) {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "notes-db", null);
         DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         final SimpleAddressItemDao simpleAddressItemDao = daoSession.getSimpleAddressItemDao();
@@ -31,18 +34,17 @@ public class GreenDaoTester {
 
         long startTime = System.currentTimeMillis();
         simpleAddressItemDao.insertOrReplaceInTx(addressItemList);
-        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
-                             startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         simpleAddressItemDao.loadAll();
-        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
-                             simpleAddressItemDao.deleteAll();
-
+        simpleAddressItemDao.deleteAll();
     }
 
-    public static void testAddressBooks(MainActivity mainActivity) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mainActivity, "notes-db", null);
+    public static void testAddressBooks(Context context) {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "notes-db", null);
         DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         AddressBookDao addressBookDao = daoSession.getAddressBookDao();
@@ -58,7 +60,7 @@ public class GreenDaoTester {
             daoSession.getContactDao().insertInTx(addressBook.getContactList());
             daoSession.getAddressItemDao().insertInTx(addressBook.getAddressItemList());
         }
-        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME);
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         addressBooks = addressBookDao.loadAll();
@@ -69,7 +71,7 @@ public class GreenDaoTester {
                 contact.getAddressBook();
             }
         }
-        mainActivity.logTime(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME);
+        EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
                              addressBookDao.deleteAll();
         daoSession.getAddressItemDao().deleteAll();
