@@ -59,6 +59,6 @@ public class SimpleAddressItem extends Model implements IAddressItem<AddressBook
 
     @Override
     public void saveAll() {
-        super.saveSilently();
+        super.save();
     }
 }

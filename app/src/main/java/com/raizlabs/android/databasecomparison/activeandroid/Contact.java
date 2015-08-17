@@ -52,6 +52,6 @@ public class Contact extends Model implements IContact<AddressBook> {
 
     @Override
     public void saveAll() {
-        super.saveSilently();
+        super.save();
     }
 }
