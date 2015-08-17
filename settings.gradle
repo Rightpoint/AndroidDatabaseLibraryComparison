@@ -4,3 +4,8 @@ include ':Libraries:DBFlow:library', ':Libraries:DBFlow:flowcore',':Libraries:DB
 include ':ActiveAndroid'
 project (':ActiveAndroid').projectDir = new File("../ActiveAndroid/")
 include ':ActiveAndroid:core'
+
+include ':Ollie'
+project (':Ollie').projectDir = new File("../Ollie/")
+include ':Ollie:core'
+include ':Ollie:compiler'

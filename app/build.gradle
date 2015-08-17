@@ -36,4 +36,8 @@ dependencies {
     mod 'de.greenrobot:eventbus:2.4.0'
 
     compile project(':ActiveAndroid:core')
+    compile project(':Ollie:core')
+    apt project(':Ollie:compiler')
+//	compile 'com.michaelpardo:ollie:0.3.1'
+//	apt 'com.michaelpardo:ollie-compiler:0.3.1'
 }
