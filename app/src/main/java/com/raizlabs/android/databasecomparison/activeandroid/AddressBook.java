@@ -61,7 +61,7 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
 
     @Override
     public void saveAll() {
-        super.save();
+        super.saveSilently();
         for (AddressItem addressItem : addresses) {
             addressItem.saveAll();
         }

@@ -1,2 +1,6 @@
 include ':app', ':greendaogenerator', ':ormlitegenerator'
 include ':Libraries:DBFlow:library', ':Libraries:DBFlow:flowcore',':Libraries:DBFlow:compiler'
+
+include ':ActiveAndroid'
+project (':ActiveAndroid').projectDir = new File("../ActiveAndroid/")
+include ':ActiveAndroid:core'
