@@ -3,13 +3,13 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.raizlabs.griddle'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "com.raizlabs.android.databasecomparison"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -27,6 +27,8 @@ dependencies {
     //compile project(":Libraries:DBFlow:flowcore")
 
     mod 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    mod 'com.michaelpardo:ollie:0.3.2-SNAPSHOT'
+    apt 'com.michaelpardo:ollie-compiler:0.3.2-SNAPSHOT'
     mod 'se.emilsjolander:sprinkles:1.3.1'
     mod 'com.github.satyan:sugar:1.3'
     mod 'de.greenrobot:greendao:1.3.7'

@@ -19,6 +19,7 @@ import com.raizlabs.android.databasecomparison.dbflow.DBFlowTester;
 import com.raizlabs.android.databasecomparison.events.LogTestDataEvent;
 import com.raizlabs.android.databasecomparison.events.TrialCompletedEvent;
 import com.raizlabs.android.databasecomparison.greendao.GreenDaoTester;
+import com.raizlabs.android.databasecomparison.ollie.OllieTester;
 import com.raizlabs.android.databasecomparison.ormlite.OrmLiteTester;
 import com.raizlabs.android.databasecomparison.sprinkles.SprinklesTester;
 import com.raizlabs.android.databasecomparison.sugar.SugarTester;
@@ -188,6 +189,7 @@ public class MainActivity extends Activity {
         chartEntrySets.put(OrmLiteTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
         chartEntrySets.put(SugarTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
         chartEntrySets.put(AATester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
+        chartEntrySets.put(OllieTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
         chartEntrySets.put(SprinklesTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
     }
     private int getFrameworkColor(String framework) {
@@ -197,6 +199,8 @@ public class MainActivity extends Activity {
                 return Color.rgb(0xE5,0x73,0x73); // red
             case AATester.FRAMEWORK_NAME:
                 return Color.rgb(0xF0, 0x62, 0x92); // pink
+            case OllieTester.FRAMEWORK_NAME:
+                return Color.rgb(0xFF, 0xA5, 0x00); // orange
             case GreenDaoTester.FRAMEWORK_NAME:
                 return Color.rgb(0xBA, 0x68, 0xC8); // purple
             case OrmLiteTester.FRAMEWORK_NAME:
@@ -236,6 +240,7 @@ public class MainActivity extends Activity {
                 DBFlowTester.testAddressItems(applicationContext);
                 SprinklesTester.testAddressItems(applicationContext);
                 AATester.testAddressItems(applicationContext);
+                OllieTester.testAddressItems(applicationContext);
                 SugarTester.testAddressItems(applicationContext);
                 EventBus.getDefault().post(new TrialCompletedEvent(getResources().getString(R.string.simple)));
             }
@@ -260,6 +265,7 @@ public class MainActivity extends Activity {
                 DBFlowTester.testAddressBooks(applicationContext);
                 SprinklesTester.testAddressBooks(applicationContext);
                 AATester.testAddressBooks(applicationContext);
+                OllieTester.testAddressBooks(applicationContext);
                 SugarTester.testAddressBooks(applicationContext);
                 EventBus.getDefault().post(new TrialCompletedEvent(getResources().getString(R.string.complex)));
             }

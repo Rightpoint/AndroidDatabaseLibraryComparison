@@ -5,11 +5,11 @@ A test between a few of the popular libraries running a speed test on how fast t
 
 There are two benchmarks.  The Simple trial uses a flat schema for an address book so each row is composed of name, address, city, state, and phone columns.  
 
-![Simple Address Item Schema](images/simpleaddressitem.png "Simple Address Item Schema")
+![Simple Address Item Schema](images/SimpleAddressItem.png "Simple Address Item Schema")
 
 The Complex trial is hierarchical and has support for multiple address books where each address book has contacts and addresses.
 
-![Address Book Schema](images/addressbook.png "Address Book Schema")
+![Address Book Schema](images/AddressBook.png "Address Book Schema")
 
 ## Results
 
