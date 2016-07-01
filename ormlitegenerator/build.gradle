@@ -1,7 +1,6 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'java'
-apply plugin: 'com.raizlabs.griddle'
 apply plugin: 'application'
 
 mainClassName = "com.raizlabs.DatabaseConfigUtil"
@@ -62,6 +61,6 @@ task genOrmCfg(dependsOn: ['run', 'clean', 'copyConfigBackTask', 'copyModelsTask
 defaultTasks 'genOrmCfg'
 
 dependencies {
-    mod 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
 }
 
