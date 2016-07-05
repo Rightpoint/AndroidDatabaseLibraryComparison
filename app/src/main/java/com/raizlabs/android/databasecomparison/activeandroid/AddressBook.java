@@ -13,7 +13,6 @@ import java.util.Collection;
  */
 @Table(name = "AddressBook")
 public class AddressBook extends Model implements IAddressBook<AddressItem, Contact> {
-
     @Column(name = "name")
     private String name;
 
@@ -23,6 +22,11 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     Collection<AddressItem> addresses;
 
     Collection<Contact> contacts;
+
+    @Override
+    public void setId(long id) {
+        // no need....AA creates an autoincrementing hidden id field
+    }
 
     @Override
     public void setName(String name) {

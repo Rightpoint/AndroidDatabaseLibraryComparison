@@ -31,12 +31,17 @@ public class RealmTester {
         long startTime = System.currentTimeMillis();
         final Collection<AddressBook> finalAddressBooks = addressBooks;
         realm.beginTransaction();
-        realm.copyToRealm(finalAddressBooks);
+        for (AddressBook book : finalAddressBooks) {
+            realm.copyToRealmOrUpdate(book.contacts);
+            realm.copyToRealmOrUpdate(book.addresses);
+        }
+        realm.copyToRealmOrUpdate(finalAddressBooks);
         realm.commitTransaction();
         EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
         addressBooks = realm.where(AddressBook.class).findAll();
+        assert(50 == addressBooks.size());
         EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.LOAD_TIME));
 
         realm.beginTransaction();

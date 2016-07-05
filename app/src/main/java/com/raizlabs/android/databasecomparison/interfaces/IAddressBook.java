@@ -7,6 +7,8 @@ import java.util.Collection;
  */
 public interface IAddressBook<AddressItem extends IAddressItem, Contact extends IContact> extends ISaveable {
 
+    public void setId(long id);
+
     public void setName(String name);
 
     public void setAuthor(String author);

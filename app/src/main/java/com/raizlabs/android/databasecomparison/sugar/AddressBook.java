@@ -11,6 +11,7 @@ import java.util.Collection;
  * Description:
  */
 public class AddressBook extends SugarRecord<AddressBook> implements IAddressBook<AddressItem, Contact> {
+    private Long id;
 
     private String name;
 
@@ -21,6 +22,11 @@ public class AddressBook extends SugarRecord<AddressBook> implements IAddressBoo
 
     @Ignore
     Collection<Contact> contacts;
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
 
     @Override
     public void setName(String name) {

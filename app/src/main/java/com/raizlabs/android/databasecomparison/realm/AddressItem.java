@@ -10,6 +10,8 @@ import io.realm.annotations.RealmClass;
  * AddressItem for Realm
  */
 public class AddressItem extends RealmObject implements IAddressItem<AddressBook> {
+    public Long id;
+
     public AddressBook addressBook;
     public String name;
     public String address;

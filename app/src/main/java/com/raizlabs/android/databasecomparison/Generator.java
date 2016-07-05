@@ -77,6 +77,7 @@ public class Generator {
             AddressBook addressBook = null;
             try {
                 addressBook = addressBookClass.newInstance();
+                addressBook.setId(i);
                 addressBook.setName("Test");
                 addressBook.setAuthor("Andrew Grosner");
                 addressBook.setAddresses(getAddresses(addressItemClass, count, addressBook));

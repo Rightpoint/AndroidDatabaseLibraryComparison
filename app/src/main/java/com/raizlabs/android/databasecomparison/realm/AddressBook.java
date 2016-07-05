@@ -5,14 +5,18 @@ import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
 import java.util.Collection;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
  * Realm address book object
  */
 public class AddressBook extends RealmObject implements IAddressBook<AddressItem, Contact> {
+    @PrimaryKey
+    public long id;
+
     public String name;
 
     public String author;
@@ -20,6 +24,11 @@ public class AddressBook extends RealmObject implements IAddressBook<AddressItem
     public RealmList<AddressItem> addresses = new RealmList<>();
 
     public RealmList<Contact> contacts = new RealmList<>();
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
 
     @Override
     public void setName(String name) {
@@ -43,14 +52,12 @@ public class AddressBook extends RealmObject implements IAddressBook<AddressItem
 
     @Override
     public void setContacts(Collection contacts) {
-        Realm realm = Realm.getDefaultInstance();
         List<Contact> contactList = (List<Contact>) contacts;
         this.contacts.addAll(contactList);
     }
 
     @Override
     public void setAddresses(Collection addresses) {
-        Realm realm = Realm.getDefaultInstance();
         List<AddressItem> addressList = (List<AddressItem>) addresses;
         this.addresses.addAll(addressList);
     }
