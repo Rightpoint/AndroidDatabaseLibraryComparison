@@ -49,6 +49,8 @@ public class RealmTester {
         realm.where(AddressBook.class).findAll().deleteAllFromRealm();
         realm.where(Contact.class).findAll().deleteAllFromRealm();
         realm.commitTransaction();
+
+        realm.close();
     }
 
     public static void testAddressItems(Context context) {
@@ -71,5 +73,7 @@ public class RealmTester {
         realm.beginTransaction();
         realm.where(SimpleAddressItem.class).findAll().deleteAllFromRealm();
         realm.commitTransaction();
+
+        realm.close();
     }
 }
