@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -21,6 +22,7 @@ import com.raizlabs.android.databasecomparison.events.TrialCompletedEvent;
 import com.raizlabs.android.databasecomparison.greendao.GreenDaoTester;
 import com.raizlabs.android.databasecomparison.ollie.OllieTester;
 import com.raizlabs.android.databasecomparison.ormlite.OrmLiteTester;
+import com.raizlabs.android.databasecomparison.realm.RealmTester;
 import com.raizlabs.android.databasecomparison.sprinkles.SprinklesTester;
 import com.raizlabs.android.databasecomparison.sugar.SugarTester;
 
@@ -45,6 +47,7 @@ public class MainActivity extends Activity {
     private Button simpleTrialButton;
     private Button complexTrialButton;
     private TextView resultsLabel;
+    private ScrollView resultsContainer;
     private TextView resultsTextView;
     private static StringBuilder resultsStringBuilder = new StringBuilder();
     private static ProgressBar progressBar;
@@ -63,6 +66,7 @@ public class MainActivity extends Activity {
         simpleTrialButton = (Button) findViewById(R.id.simple);
         complexTrialButton = (Button) findViewById(R.id.complex);
         resultsLabel = (TextView) findViewById(R.id.resultsLabel);
+        resultsContainer = (ScrollView) findViewById(R.id.resultsContainer);
         resultsTextView = (TextView) findViewById(R.id.results);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         progressBar.setIndeterminate(true);
@@ -143,13 +147,13 @@ public class MainActivity extends Activity {
         if (enabled) {
             runningTests = true;
             resultsStringBuilder.setLength(0);
-            resultsTextView.setVisibility(View.VISIBLE);
+            resultsContainer.setVisibility(View.VISIBLE);
             chartView.setVisibility(View.GONE);
             enableButtons(false);
             progressBar.setVisibility(View.VISIBLE);
         } else {
             runningTests = false;
-            resultsTextView.setVisibility(View.GONE);
+            resultsContainer.setVisibility(View.GONE);
             if (runningTestName != null) {
                 chartView.setVisibility(View.VISIBLE);
             }
@@ -173,8 +177,8 @@ public class MainActivity extends Activity {
         }
         // load data and animate it
         ArrayList<String> xAxisLabels = new ArrayList<>();
-        xAxisLabels.add("Save");
-        xAxisLabels.add("Load");
+        xAxisLabels.add("Save (msec)");
+        xAxisLabels.add("Load (msec)");
         BarData data = new BarData(xAxisLabels, dataSets);
         chartView.setData(data);
         chartView.setDescription(null); // this takes up too much space, so clear it
@@ -187,10 +191,11 @@ public class MainActivity extends Activity {
         chartEntrySets.put(DBFlowTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
         chartEntrySets.put(GreenDaoTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
         chartEntrySets.put(OrmLiteTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
-        chartEntrySets.put(SugarTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
-        chartEntrySets.put(AATester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
         chartEntrySets.put(OllieTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
-        chartEntrySets.put(SprinklesTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
+        chartEntrySets.put(RealmTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
+        //chartEntrySets.put(SugarTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
+        //chartEntrySets.put(AATester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
+        //chartEntrySets.put(SprinklesTester.FRAMEWORK_NAME, new ArrayList<BarEntry>());
     }
     private int getFrameworkColor(String framework) {
         // using the 300 line colors from http://www.google.com/design/spec/style/color.html#color-color-palette
@@ -209,6 +214,8 @@ public class MainActivity extends Activity {
                 return Color.rgb(0x79, 0x86, 0xCB); // indigo
             case SugarTester.FRAMEWORK_NAME:
                 return Color.rgb(0x64, 0xB5, 0XF6); // blue
+            case RealmTester.FRAMEWORK_NAME:
+                return Color.rgb(0xAE, 0xD5, 0X81); // light green
             default:
                 return Color.WHITE;
         }
@@ -238,10 +245,11 @@ public class MainActivity extends Activity {
                 OrmLiteTester.testAddressItems(applicationContext);
                 GreenDaoTester.testAddressItems(applicationContext);
                 DBFlowTester.testAddressItems(applicationContext);
-                SprinklesTester.testAddressItems(applicationContext);
-                AATester.testAddressItems(applicationContext);
                 OllieTester.testAddressItems(applicationContext);
-                SugarTester.testAddressItems(applicationContext);
+                RealmTester.testAddressItems(applicationContext);
+                //SprinklesTester.testAddressItems(applicationContext);
+                //AATester.testAddressItems(applicationContext);
+                //SugarTester.testAddressItems(applicationContext);
                 EventBus.getDefault().post(new TrialCompletedEvent(getResources().getString(R.string.simple)));
             }
         });
@@ -263,10 +271,11 @@ public class MainActivity extends Activity {
                 OrmLiteTester.testAddressBooks(applicationContext);
                 GreenDaoTester.testAddressBooks(applicationContext);
                 DBFlowTester.testAddressBooks(applicationContext);
-                SprinklesTester.testAddressBooks(applicationContext);
-                AATester.testAddressBooks(applicationContext);
                 OllieTester.testAddressBooks(applicationContext);
-                SugarTester.testAddressBooks(applicationContext);
+                RealmTester.testAddressBooks(applicationContext);
+                //SprinklesTester.testAddressBooks(applicationContext);
+                //AATester.testAddressBooks(applicationContext);
+                //SugarTester.testAddressBooks(applicationContext);
                 EventBus.getDefault().post(new TrialCompletedEvent(getResources().getString(R.string.complex)));
             }
         }).start();
