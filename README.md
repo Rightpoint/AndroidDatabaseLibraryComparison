@@ -22,3 +22,13 @@ These are the results for the Simple trial:
 And these are the results for the Complex trial:
 
 ![Complex Trial](images/complextrial.png "Complex Trial")
+
+## Older Results
+
+These are the results for the Simple trial with the DBs that are no longer included currently:
+
+![Simple Trial](images/simpletrialv1.png "Simple Trial")
+
+And these are the results for the Complex trial:
+
+![Complex Trial](images/complextrialv1.png "Complex Trial")
