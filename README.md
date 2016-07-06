@@ -5,11 +5,11 @@ Note:  SugarORM and ActiveAndroid and Sprinkles were removed because they're too
 
 ## Benchmark Description
 
-There are two benchmarks.  The Simple trial uses a flat schema for an address book so each row is composed of name, address, city, state, and phone columns.  
+There are two benchmarks.  The Simple trial uses a flat schema for an address book so each row is composed of name, address, city, state, and phone columns.  The Simple trial does 25000 copies of the AddressItem.  
 
 ![Simple Address Item Schema](images/SimpleAddressItem.png "Simple Address Item Schema")
 
-The Complex trial is hierarchical and has support for multiple address books where each address book has contacts and addresses.
+The Complex trial is hierarchical and has support for multiple address books where each address book has contacts and addresses.  The Complex trial does 50 copies of the AddressBook.
 
 ![Address Book Schema](images/AddressBook.png "Address Book Schema")
 
