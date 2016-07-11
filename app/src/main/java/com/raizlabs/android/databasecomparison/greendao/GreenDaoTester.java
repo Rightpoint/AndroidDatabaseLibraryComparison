@@ -46,8 +46,8 @@ public class GreenDaoTester {
     public static void testAddressBooks(Context context) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "notes-db", null);
         DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
-        DaoSession daoSession = daoMaster.newSession();
-        AddressBookDao addressBookDao = daoSession.getAddressBookDao();
+        final DaoSession daoSession = daoMaster.newSession();
+        final AddressBookDao addressBookDao = daoSession.getAddressBookDao();
         addressBookDao.deleteAll();
         daoSession.getAddressItemDao().deleteAll();
         daoSession.getContactDao().deleteAll();
@@ -55,11 +55,17 @@ public class GreenDaoTester {
         List<AddressBook> addressBooks = GreenDaoGenerator.createAddressBooks(MainActivity.ADDRESS_BOOK_COUNT);
 
         long startTime = System.currentTimeMillis();
-        addressBookDao.insertInTx(addressBooks);
-        for(AddressBook addressBook: addressBooks) {
-            daoSession.getContactDao().insertInTx(addressBook.getContactList());
-            daoSession.getAddressItemDao().insertInTx(addressBook.getAddressItemList());
-        }
+        final List<AddressBook> finalAddressBooks = addressBooks;
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                addressBookDao.insertInTx(finalAddressBooks);
+                for (AddressBook addressBook : finalAddressBooks) {
+                    daoSession.getContactDao().insertInTx(addressBook.getContactList());
+                    daoSession.getAddressItemDao().insertInTx(addressBook.getAddressItemList());
+                }
+            }
+        });
         EventBus.getDefault().post(new LogTestDataEvent(startTime, FRAMEWORK_NAME, MainActivity.SAVE_TIME));
 
         startTime = System.currentTimeMillis();
