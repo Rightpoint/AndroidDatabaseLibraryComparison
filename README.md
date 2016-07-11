@@ -32,3 +32,6 @@ These are the results for the Simple trial with the DBs that are no longer inclu
 And these are the results for the Complex trial:
 
 ![Complex Trial](images/complextrialv1.png "Complex Trial")
+
+## Blog Post:
+The original blog post can be [found here](http://www.raizlabs.com/dev/2015/02/go-dbflow-fastest-android-orm-database-library/)
