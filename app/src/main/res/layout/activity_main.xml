@@ -44,11 +44,16 @@
         android:textStyle="bold"
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/results"
+    <ScrollView
+        android:id="@+id/resultsContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"

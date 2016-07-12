@@ -35,6 +35,11 @@ public class AddressBook implements IAddressBook<AddressItem, Contact> {
     private Collection<Contact> nonDaoContacts;
 
     @Override
+    public void setId(long id) {
+        // not needed...we have autoincrementing primary keys
+    }
+
+    @Override
     public void setName(String name) {
         this.name = name;
     }

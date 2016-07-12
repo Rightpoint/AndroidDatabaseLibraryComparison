@@ -22,46 +22,46 @@ public class Generator {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <AddressItem extends IAddressItem, AddressBook extends IAddressBook<AddressItem, IContact>> Collection<AddressItem>
     getAddresses(Class<AddressItem> itemClass, int count, AddressBook addressBook) {
-        Collection<AddressItem> sugarModelList = new ArrayList<>();
+        Collection<AddressItem> addressItemCollection = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            AddressItem sugarModel = null;
+            AddressItem addressItem = null;
             try {
-                sugarModel = itemClass.newInstance();
-                sugarModel.setName("Test");
-                sugarModel.setAddress("5486 Memory Lane");
-                sugarModel.setCity("Bronx");
-                sugarModel.setState("NY");
-                sugarModel.setPhone(7185555555l);
+                addressItem = itemClass.newInstance();
+                addressItem.setName("Test");
+                addressItem.setAddress("5486 Memory Lane");
+                addressItem.setCity("Bronx");
+                addressItem.setState("NY");
+                addressItem.setPhone(7185555555l);
                 if (addressBook != null) {
-                    sugarModel.setAddressBook(addressBook);
+                    addressItem.setAddressBook(addressBook);
                 }
-                sugarModelList.add(sugarModel);
+                addressItemCollection.add(addressItem);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        return sugarModelList;
+        return addressItemCollection;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <AddressBook extends IAddressBook, Contact extends IContact> Collection<Contact>
     getContacts(Class<Contact> contactClass, int count, AddressBook addressBook) {
-        Collection<Contact> sugarModelList = new ArrayList<>();
+        Collection<Contact> contactModelList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            Contact sugarModel = null;
+            Contact contactModel = null;
             try {
-                sugarModel = contactClass.newInstance();
-                sugarModel.setName("Test");
-                sugarModel.setEmail("abgrosner@gmail.com");
+                contactModel = contactClass.newInstance();
+                contactModel.setName("Test");
+                contactModel.setEmail("abgrosner@gmail.com");
                 if (addressBook != null) {
-                    sugarModel.setAddressBook(addressBook);
+                    contactModel.setAddressBook(addressBook);
                 }
-                sugarModelList.add(sugarModel);
+                contactModelList.add(contactModel);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        return sugarModelList;
+        return contactModelList;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -77,6 +77,7 @@ public class Generator {
             AddressBook addressBook = null;
             try {
                 addressBook = addressBookClass.newInstance();
+                addressBook.setId(i);
                 addressBook.setName("Test");
                 addressBook.setAuthor("Andrew Grosner");
                 addressBook.setAddresses(getAddresses(addressItemClass, count, addressBook));

@@ -33,6 +33,11 @@ public class AddressBook extends Model implements IAddressBook<SimpleAddressItem
     Collection<Contact> contacts;
 
     @Override
+    public void setId(long id) {
+        // not needed...we have autoincrementing primary keys
+    }
+
+    @Override
     public void setName(String name) {
         this.name = name;
     }

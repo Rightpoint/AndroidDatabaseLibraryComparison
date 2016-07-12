@@ -10,6 +10,8 @@ import com.raizlabs.android.databasecomparison.activeandroid.Contact;
 import com.raizlabs.android.databasecomparison.activeandroid.SimpleAddressItem;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import ollie.Ollie;
 import se.emilsjolander.sprinkles.Sprinkles;
 
@@ -39,6 +41,9 @@ public class MainApplication extends SugarApp {
         FlowManager.init(this);
 
         Sprinkles.init(this, "sprinkles.db", 2);
+
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
+        Realm.setDefaultConfiguration(realmConfig);
 
         mDatabase = getDatabase();
     }

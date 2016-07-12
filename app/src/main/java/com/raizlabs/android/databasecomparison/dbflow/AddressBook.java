@@ -33,6 +33,11 @@ public class AddressBook extends BaseCacheableModel implements IAddressBook<Addr
 
     Collection<Contact> contacts;
 
+    @Override
+    public void setId(long id) {
+        // not needed because we have autoincrementing keys
+    }
+
     public void setName(String name) {
         this.name = name;
     }

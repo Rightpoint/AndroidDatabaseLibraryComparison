@@ -5,7 +5,9 @@ import com.raizlabs.android.databasecomparison.interfaces.IAddressBook;
 import java.util.Collection;
 
 import ollie.Model;
+import ollie.annotation.AutoIncrement;
 import ollie.annotation.Column;
+import ollie.annotation.PrimaryKey;
 import ollie.annotation.Table;
 import ollie.query.Select;
 
@@ -14,6 +16,9 @@ import ollie.query.Select;
  */
 @Table("AddressBook")
 public class AddressBook extends Model implements IAddressBook<AddressItem, Contact> {
+    @PrimaryKey
+    @AutoIncrement
+    public Long id;
 
     @Column("name")
     public String name;
@@ -24,6 +29,11 @@ public class AddressBook extends Model implements IAddressBook<AddressItem, Cont
     Collection<AddressItem> addresses;
 
     Collection<Contact> contacts;
+
+    @Override
+    public void setId(long id) {
+        // not needed...we have autoincrementing keys
+    }
 
     @Override
     public void setName(String name) {
